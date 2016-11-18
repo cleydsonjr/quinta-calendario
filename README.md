@@ -6,7 +6,7 @@
 
 Observe brevemente que haverá uma relação entre institutos, regionais e os eventos, os quais pertencem a determinadas regionais e determinados institutos.
 
-![alt tag](https://github.com/cleydsonjr/quinta-calendario/Fernando/calendario.png)
+![alt tag](https://ap.imagensbrasil.org/image/pLuiej)
 
 ## Execução do banco de dados
 Basta pegar o arquivo calendario.sql e abrir em algum SGBD de preferência, note que o banco de dados é MySQL.
