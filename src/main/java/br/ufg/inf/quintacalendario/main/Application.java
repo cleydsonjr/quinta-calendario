@@ -7,11 +7,30 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class Application {
-    public static void main(String[] args) {
-        // TODO: Externalizar
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-        // Exemplo de uso
+    private static Application applicationInstance;
+    private SessionFactory sessionFactory;
+
+    private Application() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
+
+    public static synchronized Application getInstance() {
+        if (applicationInstance == null) {
+            applicationInstance = new Application();
+        }
+
+        return applicationInstance;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    private void run() {
+        // TODO: Chamar controlador principal
+
+        // TODO Remover: Exemplo de uso da persistencia
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -21,4 +40,10 @@ public class Application {
         transaction.commit();
         session.close();
     }
+
+    public static void main(String[] args) {
+        Application application = Application.getInstance();
+        application.run();
+    }
+
 }
