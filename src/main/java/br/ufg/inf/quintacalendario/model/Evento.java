@@ -1,19 +1,17 @@
 package br.ufg.inf.quintacalendario.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+/**
+ * Classe criada apenas para exemplificar uso da persistência
+ */
 @Entity
 @Table(name = "evento")
 public class Evento {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "descricao")
-    private String descricao;
 
     public Long getId() {
         return id;
@@ -21,13 +19,5 @@ public class Evento {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 }

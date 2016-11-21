@@ -16,8 +16,6 @@ public class Application {
         Transaction transaction = session.beginTransaction();
 
         Evento evento = new Evento();
-        evento.setId(1L);
-        evento.setDescricao("Exemplo de evento.");
         session.save(evento);
 
         transaction.commit();
