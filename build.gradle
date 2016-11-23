@@ -12,3 +12,9 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 }
+
+task runApp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'br.ufg.inf.quintacalendario.main.Application'
+}
