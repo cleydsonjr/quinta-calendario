@@ -1,6 +1,8 @@
 package br.ufg.inf.quintacalendario.main;
 
 import br.ufg.inf.quintacalendario.model.Evento;
+import br.ufg.inf.quintacalendario.view.TelaInicial;
+import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,6 +31,8 @@ public class Application {
 
     private void run() {
         // TODO: Chamar controlador principal
+        TelaInicial telaInicial = new TelaInicialConsole(System.out);
+        telaInicial.exibaCabecalho();
 
         // TODO Remover: Exemplo de uso da persistencia
         Session session = sessionFactory.openSession();
