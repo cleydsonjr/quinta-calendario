@@ -2,8 +2,10 @@ package br.ufg.inf.quintacalendario.repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 public abstract class AbstractRepository<T> implements IRepository<T> {
 	
@@ -44,5 +46,23 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 	@Override
 	public T listarPorId(long id) {
 		return session.find(modelClass, id);
+	}
+	
+	@Override
+	public List<T> select(String jpql) {
+		List<T> list = session.createQuery(jpql, modelClass).getResultList();
+		return list;
+	}
+	
+	public List<T> select(String jpql, Map<String, Object> parametros){
+		Query<T> query = session.createQuery(jpql, modelClass);
+		
+		for (Map.Entry<String, Object> parameter : parametros.entrySet()){
+			query.setParameter(parameter.getKey(), parameter.getValue());
+		}
+		
+		List<T> list = query.getResultList();
+		
+		return list;
 	}
 }

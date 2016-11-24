@@ -1,6 +1,7 @@
 package br.ufg.inf.quintacalendario.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -18,8 +19,15 @@ public class Evento {
     private LocalDate dataFinal;
     private String descricao;
     private String titulo;
-//    private Categoria categoria;
-//    private Regional regional;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria")
+    private Categoria categoria;
+    
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="regionais_evento", joinColumns={@JoinColumn(name="evento", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn(name="regional", referencedColumnName="id")})
+    private List<Regional> regionais;
+    
 //    private Instituto instituto;
     
 	public Long getId() {
@@ -52,12 +60,13 @@ public class Evento {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-//	public Categoria getCategoria() {
-//		return categoria;
-//	}
-//	public void setCategoria(Categoria categoria) {
-//		this.categoria = categoria;
-//	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
 //	public Regional getRegional() {
 //		return regional;
 //	}

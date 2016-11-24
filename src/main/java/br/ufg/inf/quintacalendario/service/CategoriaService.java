@@ -37,6 +37,13 @@ public class CategoriaService {
 		}
 	}
 	
+	public List<Categoria> pesquisarPorDescricao(String descricao){
+		Session session =  sessionFactory.openSession();
+		CategoriaRepository categoriaRepository = new CategoriaRepository(session);
+		List<Categoria> categorias = categoriaRepository.listarPorDescricao(descricao);
+		return categorias;
+	}
+	
 	public void validarCategoria(Categoria categoria) throws IllegalArgumentException{
 		if (categoria.getNome().trim().isEmpty()) {
 			throw new IllegalArgumentException("O nome da categoria não pode ser vazio");
