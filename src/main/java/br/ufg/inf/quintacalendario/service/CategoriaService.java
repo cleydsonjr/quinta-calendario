@@ -46,7 +46,7 @@ public class CategoriaService {
 	
 	public void validarCategoria(Categoria categoria) throws IllegalArgumentException{
 		if (categoria.getNome().trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome da categoria não pode ser vazio");
+			throw new IllegalArgumentException("O nome da categoria nao pode ser vazio");
 		}
 		
 		if ((categoria.getNome().trim().length()) < 4) {

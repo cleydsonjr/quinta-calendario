@@ -40,7 +40,7 @@ public class RegionalService {
 	
 	public void validarRegional(Regional regional) throws IllegalArgumentException{
 		if (regional.getNome().trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome da regional não pode ser vazio");
+			throw new IllegalArgumentException("O nome da regional nao pode ser vazio");
 		}
 		
 		if ((regional.getNome().trim().length()) < 4) {
