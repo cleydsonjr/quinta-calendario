@@ -33,8 +33,8 @@ public class TesteEvento {
 		
 		Evento evento = new Evento();
 		
-		evento.setDataInicial(new Date(2016, 12, 24));
-		evento.setDataFinal(new Date(2016, 12, 24));
+		evento.setDataInicial(new Date());
+		evento.setDataFinal(new Date());
 		evento.setDescricao("Nascimento do menino jesus");
 		evento.setTitulo("Vespera de Natal");
 		evento.setCategoria(pesquisarCategoriaPorDescricao());
