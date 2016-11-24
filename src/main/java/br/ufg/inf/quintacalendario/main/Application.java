@@ -35,6 +35,7 @@ public class Application {
         Transaction transaction = session.beginTransaction();
 
         Evento evento = new Evento();
+        
         session.save(evento);
 
         transaction.commit();
