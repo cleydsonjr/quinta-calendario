@@ -32,7 +32,6 @@ public class InstitutoService {
 		} catch (Exception e) {
 			transaction.rollback();
 			session.close();
-			System.out.println(e.getMessage());
 			return false;
 		}
 	}
