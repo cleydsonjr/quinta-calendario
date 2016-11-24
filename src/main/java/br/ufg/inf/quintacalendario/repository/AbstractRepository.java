@@ -38,7 +38,7 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 	@Override
 	public List<T> listar() {
 		String sql = "SELECT " + getModelAlias() + " FROM "
-				    + this.modelClass.getSimpleName() + " " + getModelAlias();
+				    + this.modelClass.getSimpleName().toLowerCase() + " " + getModelAlias();
 		
 		return session.createQuery(sql, modelClass).getResultList();
 	}

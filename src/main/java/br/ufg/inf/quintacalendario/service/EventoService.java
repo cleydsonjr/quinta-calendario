@@ -1,5 +1,7 @@
 package br.ufg.inf.quintacalendario.service;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -35,9 +37,15 @@ public class EventoService {
 		}
 	}
 
+	public List<Evento> listar(){
+		Session session = sessionFactory.openSession();
+		return new EventoRepository(session).listar();
+	}
+	
 	private void validarEvento(Evento evento) {
 		// TODO Criar validacoes de evento
 	}
+	
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
