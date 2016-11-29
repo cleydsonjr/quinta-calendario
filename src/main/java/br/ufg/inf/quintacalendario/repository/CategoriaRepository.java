@@ -1,6 +1,8 @@
 package br.ufg.inf.quintacalendario.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 
@@ -14,8 +16,13 @@ public class CategoriaRepository extends AbstractRepository<Categoria>{
 
 	@Override
 	public List<Categoria> listarPorDescricao(String descricao) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder jpql = new StringBuilder();
+		jpql.append("Select t from categoria t where t.nome like :descricao");
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("descricao", "%"+descricao+"%");
+		
+		List<Categoria> categorias = select(jpql.toString(), parametros);
+		return categorias;
 	}
-	
 }

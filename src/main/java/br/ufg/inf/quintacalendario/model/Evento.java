@@ -1,11 +1,16 @@
 package br.ufg.inf.quintacalendario.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-import javax.persistence.*;
-
-//TODO : falta ajustar o mapeamento das classe, onetoone e many to one
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 @Entity
 @Table(name = "evento")
 public class Evento {
@@ -14,13 +19,22 @@ public class Evento {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate dataInicial;
-    private LocalDate dataFinal;
+    private Date dataInicial;
+    private Date dataFinal;
     private String descricao;
     private String titulo;
-//    private Categoria categoria;
-//    private Regional regional;
-//    private Instituto instituto;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria")
+    private Categoria categoria;
+    
+//    @ManyToMany
+//    @JoinTable(name="regionais_evento", joinColumns={@JoinColumn(name="evento")}, inverseJoinColumns={@JoinColumn(name="regional")})
+//    private List<Regional> regionais;
+//    
+//    @ManyToMany
+//    @JoinTable(name="insitutos_evento", joinColumns={@JoinColumn(name="evento")}, inverseJoinColumns={@JoinColumn(name="instituto")})
+//    private List<Instituto> institutos ;
     
 	public Long getId() {
 		return id;
@@ -28,16 +42,16 @@ public class Evento {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDate getDataInicial() {
+	public Date getDataInicial() {
 		return dataInicial;
 	}
-	public void setDataInicial(LocalDate dataInicial) {
+	public void setDataInicial(Date dataInicial) {
 		this.dataInicial = dataInicial;
 	}
-	public LocalDate getDataFinal() {
+	public Date getDataFinal() {
 		return dataFinal;
 	}
-	public void setDataFinal(LocalDate dataFinal) {
+	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
 	}
 	public String getDescricao() {
@@ -52,22 +66,22 @@ public class Evento {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-//	public Categoria getCategoria() {
-//		return categoria;
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+//	public List<Regional> getRegionais() {
+//		return regionais;
 //	}
-//	public void setCategoria(Categoria categoria) {
-//		this.categoria = categoria;
+//	public void setRegionais(List<Regional> regionais) {
+//		this.regionais = regionais;
 //	}
-//	public Regional getRegional() {
-//		return regional;
+//	public List<Instituto> getInstitutos() {
+//		return institutos;
 //	}
-//	public void setRegional(Regional regional) {
-//		this.regional = regional;
-//	}
-//	public Instituto getInstituto() {
-//		return instituto;
-//	}
-//	public void setInstituto(Instituto instituto) {
-//		this.instituto = instituto;
+//	public void setInstitutos(List<Instituto> institutos) {
+//		this.institutos = institutos;
 //	}
 }

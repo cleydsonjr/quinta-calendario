@@ -32,14 +32,20 @@ public class CategoriaService {
 		} catch (Exception e) {
 			transaction.rollback();
 			session.close();
-			System.out.println(e.getMessage());
 			return false;
 		}
 	}
 	
+	public List<Categoria> pesquisarPorDescricao(String descricao){
+		Session session =  sessionFactory.openSession();
+		CategoriaRepository categoriaRepository = new CategoriaRepository(session);
+		List<Categoria> categorias = categoriaRepository.listarPorDescricao(descricao);
+		return categorias;
+	}
+	
 	public void validarCategoria(Categoria categoria) throws IllegalArgumentException{
 		if (categoria.getNome().trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome da categoria não pode ser vazio");
+			throw new IllegalArgumentException("O nome da categoria nao pode ser vazio");
 		}
 		
 		if ((categoria.getNome().trim().length()) < 4) {

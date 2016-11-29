@@ -32,14 +32,13 @@ public class InstitutoService {
 		} catch (Exception e) {
 			transaction.rollback();
 			session.close();
-			System.out.println(e.getMessage());
 			return false;
 		}
 	}
 	
 	private void validarInstituto(Instituto instituto) {
 		if (instituto.getNome().trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome do instituto não pode ser vazio");
+			throw new IllegalArgumentException("O nome do instituto nao pode ser vazio");
 		}
 		
 		if ((instituto.getNome().trim().length()) < 4) {

@@ -20,7 +20,7 @@ public class TesteRegional {
 	@Test
 	public void testeSalvarRegional(){
 		Regional regional = new Regional();
-		regional.setNome("Goiânia");
+		regional.setNome("Goiania");
 		
 		boolean retorno = getRegionalService().salvar(regional);
 		Assert.assertTrue(retorno);
