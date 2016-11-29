@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 public class AbstractTelaCabecalho implements TelaCabecalho, OutputAware {
-    private static final String CAMINHO_CABECALHO = "/view/header.txt";
+    private static final String CAMINHO_CABECALHO = "/view/cabecalho.txt";
     private String conteudoCabecalho;
     private PrintStream output;
 
