@@ -5,8 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
-public class Application {
+import br.ufg.inf.quintacalendario.view.TelaInicial;
+import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;public class Application {
 
     private static Application applicationInstance;
     private SessionFactory sessionFactory;
@@ -29,17 +29,8 @@ public class Application {
 
     private void run() {
         // TODO: Chamar controlador principal
-
-        // TODO Remover: Exemplo de uso da persistencia
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        Evento evento = new Evento();
-        
-        session.save(evento);
-
-        transaction.commit();
-        session.close();
+       TelaInicial telaInicial = new TelaInicialConsole(System.out);
+       telaInicial.exibaCabecalho();
     }
 
     public static void main(String[] args) {
