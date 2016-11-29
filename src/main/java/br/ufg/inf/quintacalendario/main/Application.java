@@ -1,5 +1,6 @@
 package br.ufg.inf.quintacalendario.main;
 
+import br.ufg.inf.quintacalendario.controller.MainController;
 import br.ufg.inf.quintacalendario.model.Evento;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,8 +30,8 @@ import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;public class 
 
     private void run() {
         // TODO: Chamar controlador principal
-       TelaInicial telaInicial = new TelaInicialConsole(System.out);
-       telaInicial.exibaCabecalho();
+       MainController inicio = new MainController();
+       inicio.telaInicial();
     }
 
     public static void main(String[] args) {

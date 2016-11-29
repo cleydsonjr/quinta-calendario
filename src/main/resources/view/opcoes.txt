@@ -1,0 +1,7 @@
+Opções:
+--------------------------------------------------------------------------------
+1. Cadastrar um novo evento
+2. Pesquisar Eventos por Data
+3. Pesquisar Eventos por Conteúdo
+
+0. Encerrar calendário
