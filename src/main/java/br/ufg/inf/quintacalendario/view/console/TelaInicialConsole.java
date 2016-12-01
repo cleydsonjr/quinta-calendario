@@ -20,7 +20,7 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
     @Override
     public void exibaOpcoes() {
         this.carregueOpcoes();
-        output.println(conteudoOpcoes);
+        System.out.println(getConteudoOpcoes());
     }
     
     private void carregueOpcoes() {
@@ -35,6 +35,10 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
     @Override
     public int pergunteOpcao() {
         return 0;
+    }
+    
+    private String getConteudoOpcoes() {
+        return conteudoOpcoes;
     }
 
 }
