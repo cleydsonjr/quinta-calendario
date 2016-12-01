@@ -9,4 +9,7 @@ public interface IRepository<T> {
 	public List<T> listarPorDescricao(String descricao);
 	public T listarPorId(long id);
 	public List<T> select(String jpql);
+	public void limparTabela();
+	
+	
 }

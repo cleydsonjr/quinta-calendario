@@ -65,4 +65,13 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 		
 		return list;
 	}
+
+	public void limparTabela() {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append("Delete from " +this.modelClass.getSimpleName().toLowerCase());
+		
+		Query<?> query = session.createQuery(jpql.toString());
+		query.executeUpdate();
+		
+	}
 }

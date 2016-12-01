@@ -1,6 +1,7 @@
 package br.ufg.inf.quintacalendario.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,10 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-@Entity
-@Table(name = "evento")
+@Entity(name = "evento")
 public class Evento {
 	
     @Id
@@ -28,13 +30,13 @@ public class Evento {
     @JoinColumn(name = "categoria")
     private Categoria categoria;
     
-//    @ManyToMany
-//    @JoinTable(name="regionais_evento", joinColumns={@JoinColumn(name="evento")}, inverseJoinColumns={@JoinColumn(name="regional")})
-//    private List<Regional> regionais;
-//    
-//    @ManyToMany
-//    @JoinTable(name="insitutos_evento", joinColumns={@JoinColumn(name="evento")}, inverseJoinColumns={@JoinColumn(name="instituto")})
-//    private List<Instituto> institutos ;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="regionais_evento", joinColumns={@JoinColumn(name="evento")}, inverseJoinColumns={@JoinColumn(name="regional")})
+    private List<Regional> regionais;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="insitutos_evento", joinColumns={@JoinColumn(name="evento")}, inverseJoinColumns={@JoinColumn(name="instituto")})
+    private List<Instituto> institutos ;
     
 	public Long getId() {
 		return id;
@@ -72,16 +74,16 @@ public class Evento {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-//	public List<Regional> getRegionais() {
-//		return regionais;
-//	}
-//	public void setRegionais(List<Regional> regionais) {
-//		this.regionais = regionais;
-//	}
-//	public List<Instituto> getInstitutos() {
-//		return institutos;
-//	}
-//	public void setInstitutos(List<Instituto> institutos) {
-//		this.institutos = institutos;
-//	}
+	public List<Regional> getRegionais() {
+		return regionais;
+	}
+	public void setRegionais(List<Regional> regionais) {
+		this.regionais = regionais;
+	}
+	public List<Instituto> getInstitutos() {
+		return institutos;
+	}
+	public void setInstitutos(List<Instituto> institutos) {
+		this.institutos = institutos;
+	}
 }
