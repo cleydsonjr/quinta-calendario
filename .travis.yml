@@ -1,2 +1,4 @@
 language: java
 script: ./gradlew sonarqube -Dsonar.login=$SONAR_LOGIN
+jdk:
+- oraclejdk8
