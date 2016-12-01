@@ -1,20 +1,40 @@
 package br.ufg.inf.quintacalendario.testes.service;
 
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.ufg.inf.quintacalendario.main.Application;
+import br.ufg.inf.quintacalendario.model.Evento;
 import br.ufg.inf.quintacalendario.model.Regional;
+import br.ufg.inf.quintacalendario.service.CategoriaService;
+import br.ufg.inf.quintacalendario.service.EventoService;
+import br.ufg.inf.quintacalendario.service.InstitutoService;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 
 public class TesteRegional {
 	
-	private RegionalService regionalService;
+	private SessionFactory sessionFactory;
 	
 	@Before
 	public void init(){
-		setRegionalService(new RegionalService(Application.getInstance().getSessionFactory()));
+		sessionFactory = Application.getInstance().getSessionFactory();
+		
+		limparObjetoEvento();
+		
+		new EventoService(sessionFactory).limparTabela();
+		new InstitutoService(sessionFactory).limparTabela();
+		new CategoriaService(sessionFactory).limparTabela();
+		new RegionalService(sessionFactory).limparTabela();
+	}
+	
+	@After
+	public void finalizar(){
+		new RegionalService(sessionFactory).limparTabela();
 	}
 	
 	@Test
@@ -22,7 +42,7 @@ public class TesteRegional {
 		Regional regional = new Regional();
 		regional.setNome("Goiania");
 		
-		boolean retorno = getRegionalService().salvar(regional);
+		boolean retorno = new RegionalService(sessionFactory).salvar(regional);
 		Assert.assertTrue(retorno);
 	}
 	
@@ -31,15 +51,14 @@ public class TesteRegional {
 		Regional regional = new Regional();
 		regional.setNome("");
 		
-		boolean retorno = getRegionalService().salvar(regional);
+		boolean retorno = new RegionalService(sessionFactory).salvar(regional);
 		Assert.assertFalse(retorno);
 	}
-
-	public RegionalService getRegionalService() {
-		return regionalService;
-	}
-
-	public void setRegionalService(RegionalService regionalService) {
-		this.regionalService = regionalService;
+	
+	public void limparObjetoEvento(){
+		EventoService eventoService = new EventoService(sessionFactory);
+		List<Evento> eventos = eventoService.listar();
+		
+		eventos.stream().forEach(x-> eventoService.limparObjeto(x));
 	}
 }
