@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.quintacalendario.controller;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
+import br.ufg.inf.quintacalendario.view.console.CadastroEvento;
 import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 /**
@@ -35,7 +36,8 @@ public class MainController {
         switch (capturaOpcao()) {
             case 1:
                 //Cadastrar um evento
-                System.out.println("SUCESSO!");
+                CadastroEvento evento = new CadastroEvento();
+                evento.index();
                 break;
             case 2:
                 //Pesquisar Eventos por Data
