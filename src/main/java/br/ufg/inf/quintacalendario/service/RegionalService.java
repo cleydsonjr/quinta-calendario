@@ -37,6 +37,20 @@ public class RegionalService {
 		}
 	}
 	
+	public void editar(long codigo, String descricao){
+		Session session = sessionFactory.openSession();
+		RegionalRepository repository = new RegionalRepository(session);
+		Regional regional = repository.listarPorId(codigo);
+		
+		Transaction transaction = session.beginTransaction();
+		
+		regional.setNome(descricao);
+		repository.atualizar(regional);
+		
+		transaction.commit();
+		session.close();
+	}
+	
 	public void validarRegional(Regional regional) throws IllegalArgumentException{
 		if (regional.getNome().trim().isEmpty()) {
 			throw new IllegalArgumentException("O nome da regional nao pode ser vazio");
@@ -52,10 +66,28 @@ public class RegionalService {
 		return new RegionalRepository(session).listar();
 	}
 	
+	public List<Regional> listar(String descricao){
+		Session session = sessionFactory.openSession();
+		return new RegionalRepository(session).listarPorDescricao(descricao);
+	}
+	
+	public Regional listarPorId(long id){
+		Session session = sessionFactory.openSession();
+		return new RegionalRepository(session).listarPorId(id);
+	}
+	
 	public void limparTabela(){
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		new RegionalRepository(session).limparTabela();
+		transaction.commit();
+		session.close();
+	}
+
+	public void remover(long codigo) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		new RegionalRepository(session).remover(codigo);
 		transaction.commit();
 		session.close();
 	}

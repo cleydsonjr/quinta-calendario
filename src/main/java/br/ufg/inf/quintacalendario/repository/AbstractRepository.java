@@ -75,4 +75,10 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 		query.executeUpdate();
 		
 	}
+
+	@Override
+	public void remover(long id) {
+		T t = listarPorId(id);
+		session.remove(t);
+	}
 }

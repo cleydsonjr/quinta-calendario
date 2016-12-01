@@ -39,8 +39,7 @@ public class TesteRegional {
 	
 	@Test
 	public void testeSalvarRegional(){
-		Regional regional = new Regional();
-		regional.setNome("Goiania");
+		Regional regional = criarRegional();
 		
 		boolean retorno = new RegionalService(sessionFactory).salvar(regional);
 		Assert.assertTrue(retorno);
@@ -53,6 +52,40 @@ public class TesteRegional {
 		
 		boolean retorno = new RegionalService(sessionFactory).salvar(regional);
 		Assert.assertFalse(retorno);
+	}
+	
+	@Test
+	public void testeListarRegionaisPorDescricao(){
+		RegionalService service = new RegionalService(sessionFactory);
+		
+		service.salvar(criarRegional());
+		List<Regional> regionais = service.listar("Goiania");
+		
+		Assert.assertTrue(!regionais.isEmpty());
+	}
+	
+	@Test
+	public void testeAlterarRegional(){
+		RegionalService service = new RegionalService(sessionFactory);
+		long id = 0;
+		service.salvar(criarRegional());
+		
+		List<Regional> regionais = service.listar();
+		
+		if (!regionais.isEmpty()) {
+			Regional regional = regionais.get(0);
+			id = regional.getId();
+			service.editar(id, "Catalão");
+		}
+		
+		Regional regional = service.listarPorId(id);
+		Assert.assertTrue(regional.getNome().equals("Catalão"));
+	}
+	
+	public Regional criarRegional(){
+		Regional regional = new Regional();
+		regional.setNome("Goiania");
+		return regional;
 	}
 	
 	public void limparObjetoEvento(){
