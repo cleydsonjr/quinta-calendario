@@ -18,7 +18,7 @@ public class CadastroEvento extends AbstractTelaCabecalho {
     private int regional;
     private String nomeEvento;
     public void index() {
-        this.exibaCabecalho();
+        exibaCabecalho();
         this.telaCadastro();
     }
     
