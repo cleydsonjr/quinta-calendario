@@ -6,9 +6,7 @@ import org.hibernate.SessionFactory;
 
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.model.Instituto;
-import br.ufg.inf.quintacalendario.model.Regional;
 import br.ufg.inf.quintacalendario.service.InstitutoService;
-import br.ufg.inf.quintacalendario.service.RegionalService;
 
 public class InstitutoController {
 	

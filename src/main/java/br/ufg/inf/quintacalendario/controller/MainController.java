@@ -36,7 +36,7 @@ public class MainController {
         switch (capturaOpcao()) {
             case 1:
                 //Cadastrar um evento
-                CadastroEvento evento = new CadastroEvento();
+                CadastroEvento evento = new CadastroEvento(System.out);
                 evento.index();
                 break;
             case 2:

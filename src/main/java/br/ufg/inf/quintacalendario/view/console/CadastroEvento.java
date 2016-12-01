@@ -5,6 +5,8 @@
  */
 package br.ufg.inf.quintacalendario.view.console;
 
+import java.io.PrintStream;
+
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 
 /**
@@ -17,7 +19,12 @@ public class CadastroEvento extends AbstractTelaCabecalho {
     private int instituto;
     private int regional;
     private String nomeEvento;
-    public void index() {
+
+	public CadastroEvento(PrintStream output) {
+		super(output);
+	}
+
+	public void index() {
         this.exibaCabecalho();
         this.telaCadastro();
     }
