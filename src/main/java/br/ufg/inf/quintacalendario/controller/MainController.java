@@ -6,6 +6,8 @@
 package br.ufg.inf.quintacalendario.controller;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.CadastroEvento;
+import br.ufg.inf.quintacalendario.view.console.PesquisaEventoConteudo;
+import br.ufg.inf.quintacalendario.view.console.PesquisaEventoData;
 import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 /**
@@ -41,15 +43,18 @@ public class MainController {
                 break;
             case 2:
                 //Pesquisar Eventos por Data
-                System.out.println("SUCESSO!");
+                PesquisaEventoData dataEvento = new PesquisaEventoData();
+                dataEvento.index();
+                
                 break;
             case 3:
                 //Pesquisar Eventos por conteúdo
-                System.out.println("SUCESSO!");
+                PesquisaEventoConteudo conteudoEvento = new PesquisaEventoConteudo();
+                conteudoEvento.index();
                 break;
             case 0:
                 //Sair da aplicação
-                System.out.println("SUCESSO!");
+                System.out.println("Obrigado por utilizar esta aplicação.");
                 break;
             
         }

@@ -20,7 +20,6 @@ public class CadastroEvento extends AbstractTelaCabecalho {
     }
 
     public void index() {
-        this.exibaCabecalho();
         this.telaCadastro();
     }
     
