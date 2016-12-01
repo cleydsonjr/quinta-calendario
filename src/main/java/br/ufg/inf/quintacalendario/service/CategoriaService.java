@@ -57,4 +57,12 @@ public class CategoriaService {
 		Session session = sessionFactory.openSession();
 		return new CategoriaRepository(session).listar();
 	}
+	
+	public void limparTabela(){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		new CategoriaRepository(session).limparTabela();
+		transaction.commit();
+		session.close();
+	}
 }

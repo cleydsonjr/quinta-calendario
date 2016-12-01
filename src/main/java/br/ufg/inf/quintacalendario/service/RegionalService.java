@@ -51,4 +51,12 @@ public class RegionalService {
 		Session session = sessionFactory.openSession();
 		return new RegionalRepository(session).listar();
 	}
+	
+	public void limparTabela(){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		new RegionalRepository(session).limparTabela();
+		transaction.commit();
+		session.close();
+	}
 }

@@ -50,4 +50,12 @@ public class InstitutoService {
 		Session session = sessionFactory.openSession();
 		return new InstitutoRepository(session).listar();
 	}
+	
+	public void limparTabela(){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		new InstitutoRepository(session).limparTabela();
+		transaction.commit();
+		session.close();
+	}
 }
