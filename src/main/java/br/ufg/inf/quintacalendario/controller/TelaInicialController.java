@@ -17,7 +17,7 @@ public class TelaInicialController {
 			break;
 		
 		case 4:
-			new InstituicaoController().exibaOpcoes();
+			new InstitutoController().exibaOpcoes();
 			break;
 			
 		case 5:

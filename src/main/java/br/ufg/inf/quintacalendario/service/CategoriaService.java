@@ -65,4 +65,36 @@ public class CategoriaService {
 		transaction.commit();
 		session.close();
 	}
+
+	public List<Categoria> listar(String descricao) {
+		Session session = sessionFactory.openSession();
+		return new CategoriaRepository(session).listarPorDescricao(descricao);
+	}
+
+	public Categoria listarPorId(Integer codigo) {
+		Session session = sessionFactory.openSession();
+		return new CategoriaRepository(session).listarPorId(codigo);
+	}
+
+	public void editar(Integer codigo, String nome) {
+		Session session = sessionFactory.openSession();
+		CategoriaRepository repository = new CategoriaRepository(session);
+		Categoria categoria = repository.listarPorId(codigo);
+		
+		Transaction transaction = session.beginTransaction();
+		
+		categoria.setNome(nome);
+		repository.atualizar(categoria);
+		
+		transaction.commit();
+		session.close();
+	}
+
+	public void remover(Integer codigo) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		new CategoriaRepository(session).remover(codigo);
+		transaction.commit();
+		session.close();
+	}
 }

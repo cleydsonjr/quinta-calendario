@@ -27,11 +27,11 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
     public String desenharOpcoes(){
     	StringBuilder tela = new StringBuilder();
     	tela.append("Bem vindo \n")
-    		.append("Selecione uma opção \n")
+    		.append("Selecione uma opção  \n")
     		.append("1 - Menu Eventos 	  \n")
     		.append("2 - Menu Regional 	  \n")
     		.append("3 - Menu Categoria   \n")
-    		.append("4 - Menu Instituição \n")
+    		.append("4 - Menu Instituto   \n")
     		.append("5 - Logar 			  \n")
     		.append("6 - Sair 			  \n");
     	return tela.toString();

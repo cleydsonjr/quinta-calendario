@@ -91,7 +91,7 @@ public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaIn
 			System.out.println("Não existem regionais cadastradas para se realizar a alteração.");
 		}else{
 			printarRegionais(regionais);
-			Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da regional que seja editar");
+			Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da regional que deseja editar");
 			
 			Regional regional = new RegionalController().listarPorId(codigo);
 			
