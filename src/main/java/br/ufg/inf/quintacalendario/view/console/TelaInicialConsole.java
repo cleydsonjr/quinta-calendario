@@ -19,6 +19,7 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
 
     @Override
     public void exibaOpcoes() {
+        this.carregueOpcoes();
         output.println(conteudoOpcoes);
     }
     
