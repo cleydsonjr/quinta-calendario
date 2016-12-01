@@ -6,6 +6,7 @@
 package br.ufg.inf.quintacalendario.controller;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
+import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 /**
  *
  * @author fer
@@ -21,6 +22,34 @@ public class MainController {
         this.cabecalho();
         TelaInicial opcoes = new TelaInicialConsole(System.out);
         opcoes.exibaOpcoes();
+        this.redirecionaTela();
     }
     
+    private int capturaOpcao() {
+        EntradaConsole opcaoUsuario = new EntradaConsole();
+        int opcao = opcaoUsuario.pergunteInteiro("Selecione uma das opcoes :");
+        return opcao;
+    }
+    
+    private void redirecionaTela() {
+        switch (capturaOpcao()) {
+            case 1:
+                //Cadastrar um evento
+                System.out.println("SUCESSO!");
+                break;
+            case 2:
+                //Pesquisar Eventos por Data
+                System.out.println("SUCESSO!");
+                break;
+            case 3:
+                //Pesquisar Eventos por conteúdo
+                System.out.println("SUCESSO!");
+                break;
+            case 0:
+                //Sair da aplicação
+                System.out.println("SUCESSO!");
+                break;
+            
+        }
+    }
 }
