@@ -8,6 +8,13 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'org.hibernate:hibernate-core:5.2.4.Final'
     compile 'com.h2database:h2:1.4.193'
+    compile 'commons-io:commons-io:2.4'
 
     testCompile 'junit:junit:4.12'
+}
+
+task runApp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'br.ufg.inf.quintacalendario.main.Application'
 }
