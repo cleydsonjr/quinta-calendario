@@ -22,10 +22,10 @@ public class TelaInicialController {
                 new UsuarioController().exibaOpcoes();
                 break;
             case 6:
-                //sair
-                TelaInicialConsole.mensagemSaida();
+            	System.out.println("Opção em desenvolvimento");
+            	new TelaInicialConsole(System.out).exibaOpcoes();
+//                 TelaInicialConsole.mensagemSaida();
                 break;
-
             default:
                 break;
         }

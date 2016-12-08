@@ -53,6 +53,8 @@ public class EventosController {
 			List<Regional> regionais = new ArrayList<Regional>();
 			regionais.add(new RegionalService(getSessionFactory()).listarPorId(codigoRegional));
 			
+			evento.setRegionais(regionais);
+			
 			EventoService service = new EventoService(getSessionFactory());
 			service.salvar(evento);
 		} catch (Exception e) {

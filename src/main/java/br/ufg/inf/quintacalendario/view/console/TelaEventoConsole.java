@@ -58,15 +58,15 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 			exibaOpcoes();
 			break;
 		case 7:
-			System.out.println("Opção em desenvolvimento");
+			listarPorInstituto();
 			exibaOpcoes();
 			break;
 		case 8:
-			System.out.println("Opção em desenvolvimento");
+			listarPorRegional();
 			exibaOpcoes();
 			break;
 		case 9:
-			System.out.println("Opção em desenvolvimento");
+			listarPorCategoria();
 			exibaOpcoes();
 			break;
 		case 10:
@@ -89,9 +89,9 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 			.append("4 - Pesquisar todos		  \n")
 			.append("5 - Pesquisar por descrição  \n")
 			.append("6 - Pesquisar por periodo    \n")
-			.append("7 - Pesquisar por instituto - ** Em desenvolvimento ** \n")
-			.append("8 - Pesquisar por regional  - ** Em desenvolvimento ** \n")
-			.append("9 - Pesquisar por categoria - ** Em desenvolvimento ** \n")
+			.append("7 - Pesquisar por instituto  \n")
+			.append("8 - Pesquisar por regional   \n")
+			.append("9 - Pesquisar por categoria  \n")
 			.append("10 - Voltar ao menu principal \n")
 			.append("11 - Sair 					  \n");
 		return tela.toString();
@@ -132,7 +132,7 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 		EventosController controller = new EventosController();
 		List<Evento> eventos = controller.listarPorInstituto(codigoInstituto);
 		
-		if (eventos == null) {
+		if (eventos.isEmpty()) {
 			System.out.println("Não existem eventos cadastrados para esse instituto");
 		}else{
 			eventos.stream().forEach(x->System.out.println(x.getId() +" - "+x.getDescricao()));
@@ -144,8 +144,8 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 		EventosController controller = new EventosController();
 		List<Evento> eventos = controller.listarPorCategoria(codigoCategoria);
 		
-		if (eventos == null) {
-			System.out.println("Não existem eventos cadastrados para esse instituto");
+		if (eventos.isEmpty()) {
+			System.out.println("Não existem eventos cadastrados para essa categoria");
 		}else{
 			eventos.stream().forEach(x->System.out.println(x.getId() +" - "+x.getDescricao()));
 		}
@@ -156,8 +156,8 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 		EventosController controller = new EventosController();
 		List<Evento> eventos = controller.listarPorRegional(codigoRegional);
 		
-		if (eventos == null) {
-			System.out.println("Não existem eventos cadastrados para esse instituto");
+		if (eventos.isEmpty()) {
+			System.out.println("Não existem eventos cadastrados para essa regional");
 		}else{
 			eventos.stream().forEach(x->System.out.println(x.getId() +" - "+x.getDescricao()));
 		}

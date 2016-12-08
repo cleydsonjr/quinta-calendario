@@ -36,7 +36,7 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
                 .append("2 - Menu Regional 	  \n")
                 .append("3 - Menu Categoria   \n")
                 .append("4 - Menu Instituto   \n")
-                .append("5 - Logar 			  \n")
+                .append("5 - Logar **Opção em desenvolvimento**\n")
                 .append("6 - Sair 			  \n");
         return tela.toString();
     }
