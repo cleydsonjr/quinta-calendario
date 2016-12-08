@@ -77,6 +77,7 @@ public class TelaUsuarioConsole extends AbstractTelaCabecalho implements TelaIni
         Usuario usuarioLogin = new Usuario();
         usuarioLogin.setNome(new EntradaConsole().pergunteString("- Login: \n"));
         usuarioLogin.setSenha(new EntradaConsole().pergunteString("- Senha: "));
+        System.out.println("Opcao em desenvolvimento");
         return usuarioLogin;
     }
     
