@@ -3,12 +3,7 @@ package br.ufg.inf.quintacalendario.view.console;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.junit.runner.Result;
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
-
-import br.ufg.inf.quintacalendario.controller.CategoriaController;
 import br.ufg.inf.quintacalendario.controller.EventosController;
-import br.ufg.inf.quintacalendario.controller.TelaInicialController;
 import br.ufg.inf.quintacalendario.model.Categoria;
 import br.ufg.inf.quintacalendario.model.Evento;
 import br.ufg.inf.quintacalendario.model.Instituto;
@@ -131,7 +126,43 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 		List<Evento> eventos = controller.listar();
 		eventos.stream().forEach(x->System.out.println(x.getId() +" - "+ x.getTitulo()));
 	}
+	
+	public void listarPorInstituto(){
+		int codigoInstituto = selecionarCodigoInstituto();
+		EventosController controller = new EventosController();
+		List<Evento> eventos = controller.listarPorInstituto(codigoInstituto);
+		
+		if (eventos == null) {
+			System.out.println("Não existem eventos cadastrados para esse instituto");
+		}else{
+			eventos.stream().forEach(x->System.out.println(x.getId() +" - "+x.getDescricao()));
+		}
+	}
+	
+	public void listarPorCategoria(){
+		int codigoCategoria = selecionarCodigoCategoria();
+		EventosController controller = new EventosController();
+		List<Evento> eventos = controller.listarPorCategoria(codigoCategoria);
+		
+		if (eventos == null) {
+			System.out.println("Não existem eventos cadastrados para esse instituto");
+		}else{
+			eventos.stream().forEach(x->System.out.println(x.getId() +" - "+x.getDescricao()));
+		}
+	}
 
+	public void listarPorRegional(){
+		int codigoRegional = selecionarCodigoRegional();
+		EventosController controller = new EventosController();
+		List<Evento> eventos = controller.listarPorRegional(codigoRegional);
+		
+		if (eventos == null) {
+			System.out.println("Não existem eventos cadastrados para esse instituto");
+		}else{
+			eventos.stream().forEach(x->System.out.println(x.getId() +" - "+x.getDescricao()));
+		}
+	}
+	
 	private void cadastrar() {
 		EventosController eventosController = new EventosController();
 		

@@ -117,6 +117,24 @@ public class EventosController {
 		CategoriaService service = new CategoriaService(getSessionFactory());
 		return service.listar();
 	}
+	
+	public List<Evento> listarPorInstituto(int codigoInstituto) {
+		EventoService service = new EventoService(getSessionFactory());
+		List<Evento> eventos = service.listarPorInstituto(codigoInstituto);
+		return eventos;
+	}
+
+	public List<Evento> listarPorCategoria(int codigoCategoria) {
+		EventoService service = new EventoService(getSessionFactory());
+		List<Evento> eventos = service.listarPorCategoria(codigoCategoria);
+		return eventos;
+	}
+
+	public List<Evento> listarPorRegional(int codigoRegional) {
+		EventoService service = new EventoService(getSessionFactory());
+		List<Evento> eventos = service.listarPorRegional(codigoRegional);
+		return eventos;
+	}
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
