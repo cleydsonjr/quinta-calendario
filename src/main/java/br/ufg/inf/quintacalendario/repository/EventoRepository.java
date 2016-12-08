@@ -18,11 +18,11 @@ public class EventoRepository extends AbstractRepository<Evento>{
 	@Override
 	public List<Evento> listarPorDescricao(String descricao) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append("Select t from Evento t where t.nome like :descricao");
+		jpql.append("Select t from evento t where t.descricao like :descricao");
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		
-		parametros.put("descricao", descricao);
+		parametros.put("descricao", "%"+descricao+"%");
 		
 		List<Evento> eventos = select(jpql.toString(), parametros);
 		return eventos;
