@@ -39,7 +39,7 @@ public class CategoriaController {
     }
 
     /**
-     * Método que permite o cadastro de novas categorias no abnco de dados.
+     * Método que permite o cadastro de novas categorias no banco de dados.
      *
      * @param nome nome da categoria de evento cadastrada.
      * @return o valor lógico do sucesso da operação.
@@ -52,11 +52,9 @@ public class CategoriaController {
         return service.salvar(Categoria);
     }
 
-   /**
-     * Método que realiza um consulta no banco de dados por uma categoria de
-     * evento pelo nome.
-     * @return A listagem de todoas as categorias de evento encontrados na
-     * consulta.
+    /**
+     * Método lista todas as categorias de evento cadastradas.
+     * @return A listagem de todoas as categorias de evento na base de dados.
      */
     public List<Categoria> listar() {
         CategoriaService service = new CategoriaService(getSessionFactory());

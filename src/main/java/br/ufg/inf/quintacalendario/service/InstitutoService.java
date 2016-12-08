@@ -88,7 +88,7 @@ public class InstitutoService {
     }
 
     /**
-      * Método que lista todas os institutos que remetem a um evento que
+      * Método que lista todos os institutos que remetem a um evento que
       * apresentam a descrição recebida pelo método.
      * @param descricao descrição a ser comparada com a dos eventos cadastrados.
      * @return Uma lista de institutos que remetem a eventos com a descrição

@@ -21,10 +21,6 @@ public class TelaCategoriaConsole extends AbstractTelaCabecalho implements
      */
     private EntradaConsole entradaConsole;
 
-    /**
-      * Construtor da classe TelaCategoriaConsole.
-     * @param output mensagem de saída do programa.
-     */
     public TelaCategoriaConsole(PrintStream output) {
         super(output);
         setEntradaConsole(new EntradaConsole());
@@ -87,8 +83,8 @@ public class TelaCategoriaConsole extends AbstractTelaCabecalho implements
     }
 
     /**
-     * Método que realiza a operação de remoção de uma categoria de evento
-     * da base de dados.
+     * Método que realiza a operação de remoção de uma categoria de evento da
+     * base de dados.
      */
     public void remover() {
         List<Categoria> categorias = pesquisar();
@@ -113,7 +109,7 @@ public class TelaCategoriaConsole extends AbstractTelaCabecalho implements
     /**
       * Método que realiza um cnsulta na base de dados por uma categoria de
       * evento pelo nome.
-     * @return Uma lista de categorias de evento encontrados pela consulta.
+     * @return Uma lista de categorias de evento encontradas pela consulta.
      */
     private List<Categoria> pesquisar() {
         List<Categoria> categorias = new CategoriaController().listar();

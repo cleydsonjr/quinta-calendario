@@ -40,7 +40,7 @@ public class InstitutoController {
     }
 
     /**
-      * Método que permite o cadastro de novos institutos no abnco de dados.
+      * Método que permite o cadastro de novos institutos no banco de dados.
      *
      * @param nome nome do instituto cadastrado.
      * @return o valor lógico do sucesso da operação.
@@ -54,10 +54,8 @@ public class InstitutoController {
     }
 
     /**
-     * Método que realiza um consulta no banco de dados por um instituto pelo
-     * nome.
-     *
-     * @return A listagem de todos os institutos encontrados na consulta.
+     * Método que lista todos os institutos cadastrados.
+     * @return A listagem de todos os institutos na base de dados.
      */
     public List<Instituto> listar() {
         InstitutoService service = new InstitutoService(getSessionFactory());

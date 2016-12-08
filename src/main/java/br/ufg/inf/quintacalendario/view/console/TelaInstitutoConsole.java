@@ -20,10 +20,6 @@ public class TelaInstitutoConsole extends AbstractTelaCabecalho
      */
     private EntradaConsole entradaConsole;
 
-    /**
-      * Construtor da classe TelaCategoriaConsole.
-     * @param output mensagem de saída do programa.
-     */
     public TelaInstitutoConsole(PrintStream output) {
         super(output);
         setEntradaConsole(new EntradaConsole());

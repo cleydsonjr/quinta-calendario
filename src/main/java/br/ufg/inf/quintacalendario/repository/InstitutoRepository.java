@@ -7,7 +7,10 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import br.ufg.inf.quintacalendario.model.Instituto;
-
+/**
+ * Classe que encapsula as regras de pesquisa em objetos da classe Instituto da
+ * base de dados.
+ */
 public class InstitutoRepository extends AbstractRepository<Instituto>{
 
 	public InstitutoRepository(Session session) {

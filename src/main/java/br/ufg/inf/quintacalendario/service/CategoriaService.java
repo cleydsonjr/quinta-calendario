@@ -117,10 +117,10 @@ public class CategoriaService {
         return new CategoriaRepository(session).listarPorDescricao(descricao);
     }
 
-     /**
+    /**
       * Método que recebe um código de identificação e retorna a categoria de
       * evento que apresenta este código como atributo Id.
-     * @param codigo código a ser comparada com a dos eventos cadastrados.
+     * @param codigo código a ser comparado com os dos eventos cadastrados.
      * @return A categoria que apresenta o código de identificação recebido.
      */
     public Categoria listarPorId(Integer codigo) {
@@ -135,7 +135,7 @@ public class CategoriaService {
      * @param codigo codigo de identificação da categoria de evento que terá o
      * nome editado.
      * @param nome nome que será atribuído à categoria de evento que apresenta o
-     * ID inserido.
+     * Id inserido.
      */
     public void editar(Integer codigo, String nome) {
         Session session = sessionFactory.openSession();

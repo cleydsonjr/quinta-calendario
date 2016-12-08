@@ -7,7 +7,10 @@ import java.util.Map;
 import org.hibernate.Session;
 
 import br.ufg.inf.quintacalendario.model.Categoria;
-
+/**
+ * Classe que encapsula as regras de pesquisa em objetos da classe Categoria da
+ * base de dados.
+ */
 public class CategoriaRepository extends AbstractRepository<Categoria> {
 
     public CategoriaRepository(Session session) {
