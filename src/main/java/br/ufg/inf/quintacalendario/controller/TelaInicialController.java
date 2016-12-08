@@ -1,5 +1,7 @@
 package br.ufg.inf.quintacalendario.controller;
 
+import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
+
 public class TelaInicialController {
 
 	public void redirect(int opcao) {
@@ -17,10 +19,11 @@ public class TelaInicialController {
 			new InstitutoController().exibaOpcoes();
 			break;
 		case 5:
-			
+			new UsuarioController().exibaOpcoes();
 			break;
 		case 6:
-			
+			//sair
+                        TelaInicialConsole.mensagemSaida();
 			break;
 
 		default:

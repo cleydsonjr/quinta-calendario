@@ -3,7 +3,6 @@ package br.ufg.inf.quintacalendario.view.console;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.junit.runner.Result;
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 
 import br.ufg.inf.quintacalendario.controller.CategoriaController;
