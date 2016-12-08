@@ -1,98 +1,97 @@
 package br.ufg.inf.quintacalendario.repository;
 
+import br.ufg.inf.quintacalendario.model.Evento;
+import org.hibernate.Session;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Session;
+public class EventoRepository extends AbstractRepository<Evento> {
 
-import br.ufg.inf.quintacalendario.model.Evento;
+    public EventoRepository(Session session) {
+        super(session);
+    }
 
-public class EventoRepository extends AbstractRepository<Evento>{
+    @Override
+    public List<Evento> listarPorDescricao(String descricao) {
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("Select t from evento t where t.descricao like :descricao");
 
-	public EventoRepository(Session session) {
-		super(session);
-	}
+        Map<String, Object> parametros = new HashMap<String, Object>();
 
-	@Override
-	public List<Evento> listarPorDescricao(String descricao) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("Select t from evento t where t.descricao like :descricao");
-		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		
-		parametros.put("descricao", "%"+descricao+"%");
-		
-		List<Evento> eventos = select(jpql.toString(), parametros);
-		return eventos;
-	}
+        parametros.put("descricao", "%" + descricao + "%");
 
-	public List<Evento> listarPorCategoria(long idCategoria) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("select t from evento t inner join t.categoria c ")
-			.append("where c.id = :idCategoria");
-		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("idCategoria", idCategoria);
-		
-		List<Evento> eventos = select(jpql.toString(), parametros);
-		
-		return eventos;
-	}
+        List<Evento> eventos = select(jpql.toString(), parametros);
+        return eventos;
+    }
 
-	public List<Evento> listarPorInstituto(long idInstituto) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("select t from evento t inner join t.institutos i ")
-			.append("where i.id = :idInstituto");
-		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("idInstituto", idInstituto);
-		
-		List<Evento> eventos = select(jpql.toString(), parametros);
-		
-		return eventos;
-	}
+    public List<Evento> listarPorCategoria(long idCategoria) {
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("select t from evento t inner join t.categoria c ")
+                .append("where c.id = :idCategoria");
 
-	public List<Evento> listarPorRegional(long idRegional) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("select t from evento t inner join t.regionais r ")
-			.append("where r.id = :idRegional");
-		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("idRegional", idRegional);
-		
-		List<Evento> eventos = select(jpql.toString(), parametros);
-		
-		return eventos;
-	}
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("idCategoria", idCategoria);
 
-	public List<Evento> listarPorPeriodo(Date dataInicial, Date dataFinal) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("select t from evento t ")
-			.append("where t.dataInicial >= :dataInicial and t.dataFinal <= :dataFinal");
-		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		
-		parametros.put("dataInicial", dataInicial);
-		parametros.put("dataFinal", dataFinal);
-		
-		List<Evento> eventos = select(jpql.toString(), parametros);
-		
-		return eventos;
-	}
+        List<Evento> eventos = select(jpql.toString(), parametros);
 
-	public List<Evento> listarPorData(Date dataInicial) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("select t from evento t ")
-			.append("where t.dataInicial = :dataInicial");
-		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		
-		parametros.put("dataInicial", dataInicial);
-		
-		List<Evento> eventos = select(jpql.toString(), parametros);
-		
-		return eventos;
-	}
+        return eventos;
+    }
+
+    public List<Evento> listarPorInstituto(long idInstituto) {
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("select t from evento t inner join t.institutos i ")
+                .append("where i.id = :idInstituto");
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("idInstituto", idInstituto);
+
+        List<Evento> eventos = select(jpql.toString(), parametros);
+
+        return eventos;
+    }
+
+    public List<Evento> listarPorRegional(long idRegional) {
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("select t from evento t inner join t.regionais r ")
+                .append("where r.id = :idRegional");
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("idRegional", idRegional);
+
+        List<Evento> eventos = select(jpql.toString(), parametros);
+
+        return eventos;
+    }
+
+    public List<Evento> listarPorPeriodo(Date dataInicial, Date dataFinal) {
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("select t from evento t ")
+                .append("where t.dataInicial >= :dataInicial and t.dataFinal <= :dataFinal");
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+
+        parametros.put("dataInicial", dataInicial);
+        parametros.put("dataFinal", dataFinal);
+
+        List<Evento> eventos = select(jpql.toString(), parametros);
+
+        return eventos;
+    }
+
+    public List<Evento> listarPorData(Date dataInicial) {
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("select t from evento t ")
+                .append("where t.dataInicial = :dataInicial");
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+
+        parametros.put("dataInicial", dataInicial);
+
+        List<Evento> eventos = select(jpql.toString(), parametros);
+
+        return eventos;
+    }
 }
