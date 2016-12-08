@@ -4,13 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/**
+  * Classe que modela a representação dos institutos no banco de dados.
+ */
 @Entity(name="instituto")
 public class Instituto {
-	
+	/**
+          * Código de identificação do institutos.
+         */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+        /**
+          * Nome do instituto.
+         */
 	private String nome;
 	
 	public long getId() {

@@ -14,6 +14,13 @@ public class InstitutoRepository extends AbstractRepository<Instituto>{
 		super(session);
 	}
 
+    /**
+      * Método que lista todas os institutos que remetem a um evento que
+      * apresentam a descrição recebida pelo método.
+     * @param descricao descrição a ser comparada com a dos eventos cadastrados.
+     * @return Uma lista de institutos que remetem a eventos com a descrição
+     * recebida.
+     */
 	@Override
 	public List<Instituto> listarPorDescricao(String descricao) {
 		StringBuilder jpql = new StringBuilder();

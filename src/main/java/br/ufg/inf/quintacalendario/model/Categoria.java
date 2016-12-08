@@ -10,12 +10,11 @@ import javax.persistence.Id;
  */
 @Entity(name = "categoria")
 public class Categoria {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     /**
       * Código de identificação da categoria de evento.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     /**
       * Nome da categoria do evento.

@@ -10,8 +10,8 @@ import br.ufg.inf.quintacalendario.service.CategoriaService;
 import br.ufg.inf.quintacalendario.view.console.TelaCategoriaConsole;
 
 /**
- * Classe responsável pelos métodos que controlam o funcionamento das categorias
- * de evento no programa.
+ * Classe que contém métodos que controlam o funcionamento das categorias de
+ * evento no programa.
  */
 public class CategoriaController {
 
@@ -26,9 +26,6 @@ public class CategoriaController {
      */
     private SessionFactory sessionFactory;
 
-    /**
-     * Construtor da classe CategoriaController.
-     */
     public CategoriaController() {
         tela = new TelaCategoriaConsole(System.out);
         sessionFactory = Application.getInstance().getSessionFactory();
@@ -55,10 +52,11 @@ public class CategoriaController {
         return service.salvar(Categoria);
     }
 
-    /**
-     * Método que retorna uma lista das categorias já salvas no banco de dados.
-     *
-     * @return A listagem de todas as categorias de evento cadastradas.
+   /**
+     * Método que realiza um consulta no banco de dados por uma categoria de
+     * evento pelo nome.
+     * @return A listagem de todoas as categorias de evento encontrados na
+     * consulta.
      */
     public List<Categoria> listar() {
         CategoriaService service = new CategoriaService(getSessionFactory());
@@ -94,7 +92,7 @@ public class CategoriaController {
     /**
       * Método que recebe um código de identificação e um nome. O código de
       * identificação denota a categoria que passará a ter o atributo nome
-      * igual ao inserido.
+      * igual ao nome inserido.
      * @param codigo codigo de identificação da categoria de evento que terá o
      * nome editado.
      * @param nome nome que será atribuído à categoria de evento que apresenta o
