@@ -1,6 +1,6 @@
 package br.ufg.inf.quintacalendario.service;
 
-import br.ufg.inf.quintacalendario.model.Evento;
+import br.ufg.inf.quintacalendario.model.Event;
 import br.ufg.inf.quintacalendario.repository.EventoRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,22 +9,22 @@ import org.hibernate.Transaction;
 import java.util.Date;
 import java.util.List;
 
-public class EventoService {
+public class EventService {
 
     private SessionFactory sessionFactory;
 
-    public EventoService(SessionFactory sessionFactory) {
+    public EventService(SessionFactory sessionFactory) {
         super();
         this.setSessionFactory(sessionFactory);
     }
 
-    public boolean salvar(Evento evento) {
+    public boolean save(Event event) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            validarEvento(evento);
+            validarEvento(event);
 
-            new EventoRepository(session).salvar(evento);
+            new EventoRepository(session).salvar(event);
             transaction.commit();
             session.close();
 
@@ -37,51 +37,51 @@ public class EventoService {
         }
     }
 
-    public void atualizar(Evento evento) {
+    public void atualizar(Event event) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         EventoRepository eventoRepository = new EventoRepository(session);
-        eventoRepository.atualizar(evento);
+        eventoRepository.atualizar(event);
         transaction.commit();
     }
 
-    public List<Evento> listar() {
+    public List<Event> listRecords() {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listar();
     }
 
-    public List<Evento> listarPorDescricao(String descricao) {
+    public List<Event> listRecordsByDescription(String descricao) {
         Session session = sessionFactory.openSession();
-        List<Evento> eventos = new EventoRepository(session).listarPorDescricao(descricao);
-        return eventos;
+        List<Event> events = new EventoRepository(session).listarPorDescricao(descricao);
+        return events;
     }
 
-    public Evento listarPorId(long id) {
+    public Event listById(long id) {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listarPorId(id);
     }
 
-    public List<Evento> listarPorCategoria(long idCategoria) {
+    public List<Event> listarPorCategoria(long idCategoria) {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listarPorCategoria(idCategoria);
     }
 
-    public List<Evento> listarPorInstituto(long idInstituto) {
+    public List<Event> listarPorInstituto(long idInstituto) {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listarPorInstituto(idInstituto);
     }
 
-    public List<Evento> listarPorRegional(long idRegional) {
+    public List<Event> listarPorRegional(long idRegional) {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listarPorRegional(idRegional);
     }
 
-    public List<Evento> listarEventosPorPeriodo(Date dataInicial, Date dataFinal) {
+    public List<Event> listarEventosPorPeriodo(Date dataInicial, Date dataFinal) {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listarPorPeriodo(dataInicial, dataFinal);
     }
 
-    public List<Evento> listarEventosPorData(Date dataInicial) {
+    public List<Event> listarEventosPorData(Date dataInicial) {
         Session session = sessionFactory.openSession();
         return new EventoRepository(session).listarPorData(dataInicial);
 
@@ -95,31 +95,31 @@ public class EventoService {
         session.close();
     }
 
-    public void removerCategoriasEvento(Evento evento) {
-        evento.setCategoria(null);
+    public void removerCategoriasEvento(Event event) {
+        event.setCategory(null);
     }
 
-    public void removerInstitutoEvento(Evento evento) {
-        evento.getInstitutos().clear();
+    public void removerInstitutoEvento(Event event) {
+        event.getInstitutes().clear();
     }
 
-    public void removerRegionalEvento(Evento evento) {
-        evento.getRegionais().clear();
+    public void removerRegionalEvento(Event event) {
+        event.getRegionais().clear();
     }
 
-    private void validarEvento(Evento evento) {
+    private void validarEvento(Event event) {
         // TODO Criar validacoes de evento
     }
 
-    public void limparObjeto(Evento evento) {
+    public void limparObjeto(Event event) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
-        removerCategoriasEvento(evento);
-        removerInstitutoEvento(evento);
-        removerRegionalEvento(evento);
+        removerCategoriasEvento(event);
+        removerInstitutoEvento(event);
+        removerRegionalEvento(event);
 
-        new EventoRepository(session).atualizar(evento);
+        new EventoRepository(session).atualizar(event);
         transaction.commit();
     }
 

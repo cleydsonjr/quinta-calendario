@@ -1,20 +1,20 @@
 package br.ufg.inf.quintacalendario.repository;
 
-import br.ufg.inf.quintacalendario.model.Instituto;
+import br.ufg.inf.quintacalendario.model.Institute;
 import org.hibernate.Session;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InstitutoRepository extends AbstractRepository<Instituto> {
+public class InstitutoRepository extends AbstractRepository<Institute> {
 
     public InstitutoRepository(Session session) {
         super(session);
     }
 
     @Override
-    public List<Instituto> listarPorDescricao(String descricao) {
+    public List<Institute> listarPorDescricao(String descricao) {
         StringBuilder jpql = new StringBuilder();
         jpql.append("Select t from instituto t where t.nome like :descricao");
 
@@ -22,8 +22,8 @@ public class InstitutoRepository extends AbstractRepository<Instituto> {
 
         parametros.put("descricao", "%" + descricao + "%");
 
-        List<Instituto> institutos = select(jpql.toString(), parametros);
-        return institutos;
+        List<Institute> institutes = select(jpql.toString(), parametros);
+        return institutes;
     }
 
 }

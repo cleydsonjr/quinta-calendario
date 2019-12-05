@@ -16,9 +16,9 @@
         <property name="show_sql">false</property>
         <property name="format_sql">false</property>
 
-        <mapping class="br.ufg.inf.quintacalendario.model.Evento"/>
+        <mapping class="br.ufg.inf.quintacalendario.model.Event"/>
         <mapping class="br.ufg.inf.quintacalendario.model.Regional"/>
-        <mapping class="br.ufg.inf.quintacalendario.model.Categoria"/>
-        <mapping class="br.ufg.inf.quintacalendario.model.Instituto"/>
+        <mapping class="br.ufg.inf.quintacalendario.model.Category"/>
+        <mapping class="br.ufg.inf.quintacalendario.model.Institute"/>
     </session-factory>
 </hibernate-configuration>

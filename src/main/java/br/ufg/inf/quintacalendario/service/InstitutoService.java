@@ -1,6 +1,6 @@
 package br.ufg.inf.quintacalendario.service;
 
-import br.ufg.inf.quintacalendario.model.Instituto;
+import br.ufg.inf.quintacalendario.model.Institute;
 import br.ufg.inf.quintacalendario.repository.InstitutoRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,13 +16,13 @@ public class InstitutoService {
         sessionFactory = session;
     }
 
-    public boolean salvar(Instituto instituto) {
+    public boolean salvar(Institute institute) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            validarInstituto(instituto);
+            validarInstituto(institute);
 
-            new InstitutoRepository(session).salvar(instituto);
+            new InstitutoRepository(session).salvar(institute);
             transaction.commit();
             session.close();
 
@@ -35,17 +35,17 @@ public class InstitutoService {
         }
     }
 
-    private void validarInstituto(Instituto instituto) {
-        if (instituto.getNome().trim().isEmpty()) {
+    private void validarInstituto(Institute institute) {
+        if (institute.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do instituto nao pode ser vazio");
         }
 
-        if ((instituto.getNome().trim().length()) < 4) {
+        if ((institute.getNome().trim().length()) < 4) {
             throw new IllegalArgumentException("O nome do instituto deve ter no minimo 4 caracteres");
         }
     }
 
-    public List<Instituto> listar() {
+    public List<Institute> listRecords() {
         Session session = sessionFactory.openSession();
         return new InstitutoRepository(session).listar();
     }
@@ -58,31 +58,31 @@ public class InstitutoService {
         session.close();
     }
 
-    public List<Instituto> listar(String descricao) {
+    public List<Institute> listRecordsByDescription(String descricao) {
         Session session = sessionFactory.openSession();
         return new InstitutoRepository(session).listarPorDescricao(descricao);
     }
 
-    public Instituto listarPorId(Integer codigo) {
+    public Institute listById(Integer codigo) {
         Session session = sessionFactory.openSession();
         return new InstitutoRepository(session).listarPorId(codigo);
     }
 
-    public void editar(Integer codigo, String nome) {
+    public void edit(Integer codigo, String nome) {
         Session session = sessionFactory.openSession();
         InstitutoRepository repository = new InstitutoRepository(session);
-        Instituto instituto = repository.listarPorId(codigo);
+        Institute institute = repository.listarPorId(codigo);
 
         Transaction transaction = session.beginTransaction();
 
-        instituto.setNome(nome);
-        repository.atualizar(instituto);
+        institute.setName(nome);
+        repository.atualizar(institute);
 
         transaction.commit();
         session.close();
     }
 
-    public void remover(Integer codigo) {
+    public void remove(Integer codigo) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         new InstitutoRepository(session).remover(codigo);

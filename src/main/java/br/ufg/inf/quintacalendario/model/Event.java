@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity(name = "evento")
-public class Evento {
+public class Event {
 
     @Id
     @Column(name = "id")
@@ -18,7 +18,7 @@ public class Evento {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria")
-    private Categoria categoria;
+    private Category category;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "regionais_evento", joinColumns = {@JoinColumn(name = "evento")}, inverseJoinColumns = {@JoinColumn(name = "regional")})
@@ -26,7 +26,7 @@ public class Evento {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "insitutos_evento", joinColumns = {@JoinColumn(name = "evento")}, inverseJoinColumns = {@JoinColumn(name = "instituto")})
-    private List<Instituto> institutos;
+    private List<Institute> institutes;
 
     public Long getId() {
         return id;
@@ -40,7 +40,7 @@ public class Evento {
         return dataInicial;
     }
 
-    public void setDataInicial(Date dataInicial) {
+    public void setInitialDate(Date dataInicial) {
         this.dataInicial = dataInicial;
     }
 
@@ -48,7 +48,7 @@ public class Evento {
         return dataFinal;
     }
 
-    public void setDataFinal(Date dataFinal) {
+    public void setFinalDate(Date dataFinal) {
         this.dataFinal = dataFinal;
     }
 
@@ -56,7 +56,7 @@ public class Evento {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescription(String descricao) {
         this.descricao = descricao;
     }
 
@@ -64,16 +64,16 @@ public class Evento {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    public void setTitle(String titulo) {
         this.titulo = titulo;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public List<Regional> getRegionais() {
@@ -84,11 +84,11 @@ public class Evento {
         this.regionais = regionais;
     }
 
-    public List<Instituto> getInstitutos() {
-        return institutos;
+    public List<Institute> getInstitutes() {
+        return institutes;
     }
 
-    public void setInstitutos(List<Instituto> institutos) {
-        this.institutos = institutos;
+    public void setInstitutes(List<Institute> institutes) {
+        this.institutes = institutes;
     }
 }

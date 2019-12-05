@@ -2,30 +2,28 @@ package br.ufg.inf.quintacalendario.controller;
 
 import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
 
-public class TelaInicialController {
+public class HomePageController {
 
-    public void redirect(int opcao) {
-        switch (opcao) {
+    public void redirectScreenBy(Integer choice) {
+        switch (choice) {
             case 1:
-                new EventosController().exibaOpcoes();
+                new EventController().showHisOptions();
                 break;
             case 2:
-                new RegionalController().exibaOpcoes();
+                new RegionalController().showHisOptions();
                 break;
             case 3:
-                new CategoriaController().exibaOpcoes();
+                new CategoryController().showHisOptions();
                 break;
             case 4:
-                new InstitutoController().exibaOpcoes();
+                new InstituteController().showHisOptions();
                 break;
             case 5:
-                new UsuarioController().exibaOpcoes();
+                new UserController().showHisOptions();
                 break;
             case 6:
-                //sair
                 TelaInicialConsole.mensagemSaida();
                 break;
-
             default:
                 break;
         }

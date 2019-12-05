@@ -1,10 +1,10 @@
 package br.ufg.inf.quintacalendario.testes.service;
 
 import br.ufg.inf.quintacalendario.main.Application;
-import br.ufg.inf.quintacalendario.model.Categoria;
-import br.ufg.inf.quintacalendario.model.Evento;
-import br.ufg.inf.quintacalendario.service.CategoriaService;
-import br.ufg.inf.quintacalendario.service.EventoService;
+import br.ufg.inf.quintacalendario.model.Category;
+import br.ufg.inf.quintacalendario.model.Event;
+import br.ufg.inf.quintacalendario.service.CategoryService;
+import br.ufg.inf.quintacalendario.service.EventService;
 import br.ufg.inf.quintacalendario.service.InstitutoService;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 import org.hibernate.SessionFactory;
@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class TesteCategoria {
+public class TesteCategory {
 
     SessionFactory sessionFactory;
 
@@ -25,36 +25,36 @@ public class TesteCategoria {
 
         limparObjetoEvento();
         new RegionalService(sessionFactory).limparTabela();
-        new EventoService(sessionFactory).limparTabela();
+        new EventService(sessionFactory).limparTabela();
         new InstitutoService(sessionFactory).limparTabela();
-        new CategoriaService(sessionFactory).limparTabela();
+        new CategoryService(sessionFactory).limparTabela();
     }
 
     @After
     public void finalizar() {
-        new CategoriaService(sessionFactory).limparTabela();
+        new CategoryService(sessionFactory).limparTabela();
     }
 
     @Test
     public void testeSalvarCategoria() {
-        Categoria categoria = new Categoria();
-        categoria.setNome("Feriado");
-        boolean retorno = new CategoriaService(sessionFactory).salvar(categoria);
+        Category category = new Category();
+        category.setName("Feriado");
+        boolean retorno = new CategoryService(sessionFactory).save(category);
         Assert.assertTrue(retorno);
     }
 
     @Test
     public void testeSalvarCategoriaComNomeVazio() {
-        Categoria categoria = new Categoria();
-        categoria.setNome("");
-        boolean retorno = new CategoriaService(sessionFactory).salvar(categoria);
+        Category category = new Category();
+        category.setName("");
+        boolean retorno = new CategoryService(sessionFactory).save(category);
         Assert.assertFalse(retorno);
     }
 
     public void limparObjetoEvento() {
-        EventoService eventoService = new EventoService(sessionFactory);
-        List<Evento> eventos = eventoService.listar();
+        EventService eventService = new EventService(sessionFactory);
+        List<Event> events = eventService.listRecords();
 
-        eventos.forEach(eventoService::limparObjeto);
+        events.forEach(eventService::limparObjeto);
     }
 }

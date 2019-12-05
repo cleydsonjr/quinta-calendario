@@ -16,7 +16,7 @@ public class RegionalService {
         sessionFactory = session;
     }
 
-    public boolean salvar(Regional regional) {
+    public boolean save(Regional regional) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -36,14 +36,14 @@ public class RegionalService {
         }
     }
 
-    public void editar(long codigo, String descricao) {
+    public void edit(long codigo, String descricao) {
         Session session = sessionFactory.openSession();
         RegionalRepository repository = new RegionalRepository(session);
         Regional regional = repository.listarPorId(codigo);
 
         Transaction transaction = session.beginTransaction();
 
-        regional.setNome(descricao);
+        regional.setName(descricao);
         repository.atualizar(regional);
 
         transaction.commit();
@@ -60,17 +60,17 @@ public class RegionalService {
         }
     }
 
-    public List<Regional> listar() {
+    public List<Regional> listRecords() {
         Session session = sessionFactory.openSession();
         return new RegionalRepository(session).listar();
     }
 
-    public List<Regional> listar(String descricao) {
+    public List<Regional> listRecordsByDescription(String descricao) {
         Session session = sessionFactory.openSession();
         return new RegionalRepository(session).listarPorDescricao(descricao);
     }
 
-    public Regional listarPorId(long id) {
+    public Regional listById(long id) {
         Session session = sessionFactory.openSession();
         return new RegionalRepository(session).listarPorId(id);
     }
@@ -83,7 +83,7 @@ public class RegionalService {
         session.close();
     }
 
-    public void remover(long codigo) {
+    public void remove(long codigo) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         new RegionalRepository(session).remover(codigo);

@@ -3,72 +3,72 @@ package br.ufg.inf.quintacalendario.controller;
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.model.Regional;
 import br.ufg.inf.quintacalendario.service.RegionalService;
-import br.ufg.inf.quintacalendario.view.console.TelaRegionalConsole;
+import br.ufg.inf.quintacalendario.view.console.RegionalScreenConsole;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 public class RegionalController {
 
-    private TelaRegionalConsole tela;
+    private RegionalScreenConsole regionalScreen;
     private SessionFactory sessionFactory;
 
     public RegionalController() {
-        tela = new TelaRegionalConsole(System.out);
+        regionalScreen = new RegionalScreenConsole(System.out);
         sessionFactory = Application.getInstance().getSessionFactory();
     }
 
-    public void exibaOpcoes() {
-        getTela().exibaOpcoes();
+    void showHisOptions() {
+        getRegionalScreen().showOptions();
     }
 
-    public boolean cadastrar(String nome) {
+    public boolean register(String name) {
         Regional regional = new Regional();
-        regional.setNome(nome);
+        regional.setName(name);
 
-        RegionalService service = new RegionalService(getSessionFactory());
-        return service.salvar(regional);
+        RegionalService regionalService = new RegionalService(getSessionFactory());
+        return regionalService.save(regional);
     }
 
-    public List<Regional> listar() {
-        RegionalService service = new RegionalService(getSessionFactory());
-        return service.listar();
+    public List<Regional> listRecords() {
+        RegionalService regionalService = new RegionalService(getSessionFactory());
+        return regionalService.listRecords();
     }
 
-    public List<Regional> listar(String descricao) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        return service.listar(descricao);
+    public List<Regional> listRecordsByDescription(String description) {
+        RegionalService regionalService = new RegionalService(getSessionFactory());
+        return regionalService.listRecordsByDescription(description);
     }
 
-    public Regional listarPorId(Integer codigo) {
+    public Regional listById(Integer id) {
         RegionalService service = new RegionalService(getSessionFactory());
-        Regional regional = service.listarPorId(codigo);
-        return regional;
+        return service.listById(id);
     }
 
-    public void editar(Integer codigo, String nome) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        service.editar(codigo, nome);
+    public void edit(Integer id, String name) {
+        RegionalService regionalService = new RegionalService(getSessionFactory());
+        regionalService.edit(id, name);
     }
 
-    public void remover(Integer codigo) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        Regional regional = service.listarPorId(codigo);
-        if (regional == null) {
+    public void remove(Integer id) {
+        RegionalService regionalService = new RegionalService(getSessionFactory());
+        Regional regional = regionalService.listById(id);
+
+        if (Objects.isNull(regional)) {
             System.out.println("*******Codigo invalido*******");
-            System.out.println("");
-            getTela().remover();
+            getRegionalScreen().remove();
         } else {
-            service.remover(codigo);
+            regionalService.remove(id);
         }
     }
 
-    public TelaRegionalConsole getTela() {
-        return tela;
+    private RegionalScreenConsole getRegionalScreen() {
+        return regionalScreen;
     }
 
-    public void setTela(TelaRegionalConsole tela) {
-        this.tela = tela;
+    public void setRegionalScreen(RegionalScreenConsole regionalScreen) {
+        this.regionalScreen = regionalScreen;
     }
 
     public SessionFactory getSessionFactory() {

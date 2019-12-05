@@ -30,7 +30,7 @@ public class Application {
     private void run() {
         TelaInicial telaInicial = new TelaInicialConsole(System.out);
         telaInicial.exibaCabecalho();
-        telaInicial.exibaOpcoes();
+        telaInicial.showOptions();
     }
 
     public static void main(String[] args) {

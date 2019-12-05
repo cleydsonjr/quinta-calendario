@@ -1,9 +1,9 @@
 package br.ufg.inf.quintacalendario.view.console;
 
-import br.ufg.inf.quintacalendario.controller.EventosController;
-import br.ufg.inf.quintacalendario.model.Categoria;
-import br.ufg.inf.quintacalendario.model.Evento;
-import br.ufg.inf.quintacalendario.model.Instituto;
+import br.ufg.inf.quintacalendario.controller.EventController;
+import br.ufg.inf.quintacalendario.model.Category;
+import br.ufg.inf.quintacalendario.model.Event;
+import br.ufg.inf.quintacalendario.model.Institute;
 import br.ufg.inf.quintacalendario.model.Regional;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
@@ -11,17 +11,17 @@ import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 import java.io.PrintStream;
 import java.util.List;
 
-public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInicial {
+public class EventScreenConsole extends AbstractTelaCabecalho implements TelaInicial {
 
     private EntradaConsole entradaConsole;
 
-    public TelaEventoConsole(PrintStream out) {
+    public EventScreenConsole(PrintStream out) {
         super(out);
         setEntradaConsole(new EntradaConsole());
     }
 
     @Override
-    public void exibaOpcoes() {
+    public void showOptions() {
         exibaCabecalho();
         desenharOpcoesInicial();
         Integer opcao = getEntradaConsole().pergunteInteiro(desenharOpcoesInicial().toString());
@@ -37,46 +37,46 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
         switch (opcao) {
             case 1:
                 cadastrar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 2:
-                exibaOpcoes();
+                showOptions();
                 break;
             case 3:
-                exibaOpcoes();
+                showOptions();
                 break;
             case 4:
                 listar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 5:
                 listarPorDescricao();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 6:
                 listarPorPeriodo();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 7:
                 System.out.println("Opção em desenvolvimento");
-                exibaOpcoes();
+                showOptions();
                 break;
             case 8:
                 System.out.println("Opção em desenvolvimento");
-                exibaOpcoes();
+                showOptions();
                 break;
             case 9:
                 System.out.println("Opção em desenvolvimento");
-                exibaOpcoes();
+                showOptions();
                 break;
             case 10:
-                new TelaInicialConsole(System.out).exibaOpcoes();
+                new TelaInicialConsole(System.out).showOptions();
                 break;
             case 11:
                 break;
             default:
                 System.out.println("Opção invalida");
-                exibaOpcoes();
+                showOptions();
                 break;
         }
     }
@@ -99,12 +99,12 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
 
     private void listarPorDescricao() {
         String descricaoEvento = getEntradaConsole().pergunteString("Digite a descricão do evento", true);
-        EventosController eventosController = new EventosController();
-        List<Evento> eventos = eventosController.listar(descricaoEvento);
-        if (eventos.isEmpty()) {
+        EventController eventController = new EventController();
+        List<Event> events = eventController.listRecordsByDescription(descricaoEvento);
+        if (events.isEmpty()) {
             System.out.println("Não existem eventos cadastrados com essa descrição");
         } else {
-            eventos.forEach(x -> System.out.println(x.getId() + " - " + x.getTitulo()));
+            events.forEach(x -> System.out.println(x.getId() + " - " + x.getTitulo()));
         }
     }
 
@@ -112,23 +112,23 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
         String dataInicial = getEntradaConsole().pergunteString("Digite a data inicial, no formato dd/MM/YYYY", true);
         String dataFinal = getEntradaConsole().pergunteString("Digite a data final, no formato dd/MM/YYYY", true);
 
-        EventosController eventoController = new EventosController();
-        List<Evento> eventos = eventoController.listarPorPeriodo(dataInicial, dataFinal);
-        if (eventos.isEmpty()) {
+        EventController eventoController = new EventController();
+        List<Event> events = eventoController.listByPeriod(dataInicial, dataFinal);
+        if (events.isEmpty()) {
             System.out.println("Não existe eventos cadastrados no periodo informado");
         } else {
-            eventos.forEach(x -> System.out.println(x.getId() + " - " + x.getDescricao()));
+            events.forEach(x -> System.out.println(x.getId() + " - " + x.getDescricao()));
         }
     }
 
     private void listar() {
-        EventosController controller = new EventosController();
-        List<Evento> eventos = controller.listar();
-        eventos.forEach(x -> System.out.println(x.getId() + " - " + x.getTitulo()));
+        EventController controller = new EventController();
+        List<Event> events = controller.listRecords();
+        events.forEach(x -> System.out.println(x.getId() + " - " + x.getTitulo()));
     }
 
     private void cadastrar() {
-        EventosController eventosController = new EventosController();
+        EventController eventController = new EventController();
 
         if (dadosCadastroSaoValidos()) {
 
@@ -141,7 +141,7 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
             int codigoRegional = selecionarCodigoRegional();
             int codigoInstituto = selecionarCodigoInstituto();
 
-            boolean result = eventosController.cadastrar(descricao, titulo, dataInicial, dataFinal, codigoCategoria, codigoRegional, codigoInstituto);
+            boolean result = eventController.register(descricao, titulo, dataInicial, dataFinal, codigoCategoria, codigoRegional, codigoInstituto);
             if (result) {
                 System.out.println("Evento cadastrado com sucesso");
             }
@@ -149,8 +149,8 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
     }
 
     private int selecionarCodigoRegional() {
-        EventosController controller = new EventosController();
-        List<Regional> regionais = controller.listarRegionais();
+        EventController controller = new EventController();
+        List<Regional> regionais = controller.listRegionals();
         boolean result = false;
         Integer codigoRegional = 0;
         do {
@@ -172,17 +172,17 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
     }
 
     private int selecionarCodigoInstituto() {
-        EventosController controller = new EventosController();
-        List<Instituto> institutos = controller.listarInstitutos();
+        EventController controller = new EventController();
+        List<Institute> institutes = controller.listInstitutes();
         boolean result;
         Integer codigoInstituto = 0;
 
         do {
             Integer codigo;
-            institutos.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getNome()));
+            institutes.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getNome()));
             codigo = getEntradaConsole().pergunteInteiro("Digite o codigo do instituto do evento");
 
-            result = (institutos.stream().anyMatch(x -> x.getId() == codigo));
+            result = (institutes.stream().anyMatch(x -> x.getId() == codigo));
 
             if (!result) {
                 System.out.println("Codigo invalido");
@@ -196,17 +196,17 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
     }
 
     private int selecionarCodigoCategoria() {
-        EventosController controller = new EventosController();
-        List<Categoria> categorias = controller.listarCategorias();
+        EventController controller = new EventController();
+        List<Category> categories = controller.listCategories();
         boolean result;
         Integer codigoCategoria = 0;
 
         do {
             Integer codigo;
-            categorias.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getNome()));
+            categories.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getName()));
             codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da categoria do evento");
 
-            result = (categorias.stream().anyMatch(x -> x.getId() == codigo));
+            result = (categories.stream().anyMatch(x -> x.getId() == codigo));
 
             if (!result) {
                 System.out.println("Codigo invalido");
@@ -220,24 +220,24 @@ public class TelaEventoConsole extends AbstractTelaCabecalho implements TelaInic
     }
 
     private boolean dadosCadastroSaoValidos() {
-        EventosController controller = new EventosController();
+        EventController controller = new EventController();
         boolean result = true;
 
-        List<Regional> regionais = controller.listarRegionais();
-        List<Instituto> institutos = controller.listarInstitutos();
-        List<Categoria> categorias = controller.listarCategorias();
+        List<Regional> regionais = controller.listRegionals();
+        List<Institute> institutes = controller.listInstitutes();
+        List<Category> categories = controller.listCategories();
 
         if (regionais == null || regionais.isEmpty()) {
             System.out.println("Não existem regionais cadastradas, efetue o seu cadastro antes de prosseguir");
             result = false;
         }
 
-        if (institutos == null || institutos.isEmpty()) {
+        if (institutes == null || institutes.isEmpty()) {
             System.out.println("Não existem institutos cadastrados, efetue o seu cadastro antes de prosseguir");
             result = false;
         }
 
-        if (categorias == null || categorias.isEmpty()) {
+        if (categories == null || categories.isEmpty()) {
             System.out.println("Não existem categorias cadastradas, efetue o seu cadastro antes de prosseguir");
             result = false;
         }

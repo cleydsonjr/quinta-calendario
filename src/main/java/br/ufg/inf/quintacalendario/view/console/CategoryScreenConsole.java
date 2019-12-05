@@ -1,24 +1,24 @@
 package br.ufg.inf.quintacalendario.view.console;
 
-import br.ufg.inf.quintacalendario.controller.CategoriaController;
-import br.ufg.inf.quintacalendario.model.Categoria;
+import br.ufg.inf.quintacalendario.controller.CategoryController;
+import br.ufg.inf.quintacalendario.model.Category;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 
 import java.io.PrintStream;
 import java.util.List;
 
-public class TelaCategoriaConsole extends AbstractTelaCabecalho implements TelaInicial {
+public class CategoryScreenConsole extends AbstractTelaCabecalho implements TelaInicial {
 
     private EntradaConsole entradaConsole;
 
-    public TelaCategoriaConsole(PrintStream output) {
+    public CategoryScreenConsole(PrintStream output) {
         super(output);
         setEntradaConsole(new EntradaConsole());
     }
 
     @Override
-    public void exibaOpcoes() {
+    public void showOptions() {
         exibaCabecalho();
         desenharOpcoesInicial();
         Integer opcao = getEntradaConsole().pergunteInteiro(desenharOpcoesInicial().toString());
@@ -29,80 +29,80 @@ public class TelaCategoriaConsole extends AbstractTelaCabecalho implements TelaI
         switch (opcao) {
             case 1:
                 cadastrar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 2:
                 editar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 3:
-                remover();
-                exibaOpcoes();
+                remove();
+                showOptions();
                 break;
             case 4:
-                List<Categoria> categorias = pesquisar();
-                if (categorias.isEmpty()) {
+                List<Category> categories = pesquisar();
+                if (categories.isEmpty()) {
                     System.out.println("Não existem categorias cadastradas");
                 } else {
-                    printarcategorias(categorias);
+                    printarcategorias(categories);
                 }
-                exibaOpcoes();
+                showOptions();
                 break;
             case 5:
                 pesquisarPorDescricao();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 6:
-                new TelaInicialConsole(System.out).exibaOpcoes();
+                new TelaInicialConsole(System.out).showOptions();
                 break;
             case 7:
                 break;
             default:
                 System.out.println("Opção invalida");
-                exibaOpcoes();
+                showOptions();
                 break;
         }
     }
 
-    public void remover() {
-        List<Categoria> categorias = pesquisar();
-        if (!categorias.isEmpty()) {
-            printarcategorias(categorias);
+    public void remove() {
+        List<Category> categories = pesquisar();
+        if (!categories.isEmpty()) {
+            printarcategorias(categories);
             Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da Categoria que deseja remover");
-            new CategoriaController().remover(codigo);
+            new CategoryController().remove(codigo);
             System.out.println("Categoria removida com sucesso");
         }
     }
 
     private void pesquisarPorDescricao() {
         String descricao = getEntradaConsole().pergunteString("Digite a descrição desejada", true);
-        List<Categoria> categorias = new CategoriaController().listar(descricao);
-        printarcategorias(categorias);
+        List<Category> categories = new CategoryController().listRecordsByDescription(descricao);
+        printarcategorias(categories);
     }
 
-    private List<Categoria> pesquisar() {
-        List<Categoria> categorias = new CategoriaController().listar();
-        return categorias;
+    private List<Category> pesquisar() {
+        List<Category> categories = new CategoryController().listRecords();
+        return categories;
     }
 
     private void editar() {
-        List<Categoria> categorias = pesquisar();
-        if (categorias.isEmpty()) {
+        List<Category> categories = pesquisar();
+        if (categories.isEmpty()) {
             System.out.println("Não existem categorias cadastradas para se realizar a alteração.");
         } else {
-            printarcategorias(categorias);
+            printarcategorias(categories);
             Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da Categoria que deseja editar");
 
-            Categoria Categoria = new CategoriaController().listarPorId(codigo);
+            Category Category = new CategoryController().listById(codigo);
 
-            if (Categoria.getNome().isEmpty()) {
+            if (Category.getName().isEmpty()) {
                 System.out.println("Categoria não encontrada");
                 editar();
             } else {
-                System.out.println(Categoria.getId() + " - " + Categoria.getNome());
+                System.out.println(Category.getId() + " - " + Category.getName());
 
                 String nome = getEntradaConsole().pergunteString("Digite o novo nome da Categoria", true);
-                new CategoriaController().editar(codigo, nome);
+                new CategoryController().edit(codigo, nome);
 
                 System.out.println("Categoria Alterada Com Sucesso");
             }
@@ -113,14 +113,14 @@ public class TelaCategoriaConsole extends AbstractTelaCabecalho implements TelaI
         boolean result = false;
         while (!result) {
             String nome = getEntradaConsole().pergunteString("Digite o nome da Categoria");
-            result = new CategoriaController().cadastrar(nome);
+            result = new CategoryController().register(nome);
         }
 
         System.out.println("Categoria Cadastrada Com Sucesso");
     }
 
-    private void printarcategorias(List<Categoria> categorias) {
-        categorias.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getNome()));
+    private void printarcategorias(List<Category> categories) {
+        categories.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getName()));
     }
 
     @Override
