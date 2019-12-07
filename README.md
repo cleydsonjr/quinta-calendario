@@ -25,4 +25,4 @@ Focando nas boas práticas da linguagem/programação e na filosofia de código 
 
 
 [![Build Status](https://travis-ci.org/hyagosouzza/quinta-calendario.svg?branch=master)](https://travis-ci.org/hyagosouzza/quinta-calendario.svg?branch=master)
-[![Quality Gate](https://sonarcloud.io/dashboard?id=hyagosouzza)](https://sonarcloud.io/dashboard?id=hyagosouzza)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hyagosouzza&metric=alert_status)](https://sonarcloud.io/dashboard?id=hyagosouzza)

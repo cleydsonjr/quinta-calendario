@@ -10,7 +10,6 @@ import br.ufg.inf.quintacalendario.service.EventService;
 import br.ufg.inf.quintacalendario.service.InstitutoService;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 import br.ufg.inf.quintacalendario.view.console.EventScreenConsole;
-import org.hibernate.SessionFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;

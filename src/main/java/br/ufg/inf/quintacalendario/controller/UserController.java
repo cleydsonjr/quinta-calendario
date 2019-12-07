@@ -2,7 +2,6 @@ package br.ufg.inf.quintacalendario.controller;
 
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.view.console.UserScreenConsole;
-import org.hibernate.SessionFactory;
 
 /**
  * Controller responsible for intercepting user entity operations, extend AbstractController class

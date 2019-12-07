@@ -1,7 +1,6 @@
 package br.ufg.inf.quintacalendario.controller;
 
 import br.ufg.inf.quintacalendario.main.Application;
-import br.ufg.inf.quintacalendario.model.Institute;
 import br.ufg.inf.quintacalendario.model.Regional;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 import br.ufg.inf.quintacalendario.view.console.RegionalScreenConsole;

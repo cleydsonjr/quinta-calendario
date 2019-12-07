@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 
 public class CategoryControllerTest {
 
+	CategoryController categoryController = new CategoryController();
 	SessionFactory sessionFactory;
 
 	@Before
@@ -31,31 +32,15 @@ public class CategoryControllerTest {
 	}
 
 	@Test
-	public void register() {
-		CategoryController categoryController = new CategoryController();
+	public void registerSuccessfully() {
 		String name = "Creating Category";
 
 		Assert.assertTrue(categoryController.register(name));
+	}
+
+	@Test
+	public void dontRegister() {
 		Assert.assertFalse(categoryController.register(null));
 	}
 
-	@Test
-	public void listRecords() {
-	}
-
-	@Test
-	public void listRecordsByDescription() {
-	}
-
-	@Test
-	public void listById() {
-	}
-
-	@Test
-	public void edit() {
-	}
-
-	@Test
-	public void remove() {
-	}
 }
