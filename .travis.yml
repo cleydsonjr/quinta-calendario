@@ -1,4 +1,9 @@
 language: java
-script: ./gradlew sonarqube -Dsonar.login=$SONAR_LOGIN
-jdk:
-- oraclejdk8
+addons:
+  sonarcloud:
+    organization: "hyagosouzza"
+    token:
+      secure: "travis encrypt 9ea1c88e4986136507e23fa765e7deeb8de5a973"
+
+script:
+  - ./gradlew sonarqube

@@ -10,6 +10,12 @@ buildscript {
     }
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectKey", "hyagosouzza_quinta-calendario"
+    }
+}
+
 repositories {
     jcenter()
 }
