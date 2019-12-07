@@ -2,8 +2,18 @@ package br.ufg.inf.quintacalendario.controller;
 
 import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
 
+/**
+ * Controller responsible for intercepting home page entity operations
+ *
+ * @author Hyago Souza
+ */
 public class HomePageController {
 
+    /**
+     * Redirects the user according to the desired option
+     *
+     * @param choice user choice on screen
+     */
     public void redirectScreenBy(Integer choice) {
         switch (choice) {
             case 1:

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "evento")
+@Entity(name = "event")
 public class Event {
 
     @Id
@@ -17,15 +17,15 @@ public class Event {
     private String titulo;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoria")
+    @JoinColumn(name = "category")
     private Category category;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "regionais_evento", joinColumns = {@JoinColumn(name = "evento")}, inverseJoinColumns = {@JoinColumn(name = "regional")})
+    @JoinTable(name = "regional_event", joinColumns = {@JoinColumn(name = "event")}, inverseJoinColumns = {@JoinColumn(name = "regional")})
     private List<Regional> regionais;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "insitutos_evento", joinColumns = {@JoinColumn(name = "evento")}, inverseJoinColumns = {@JoinColumn(name = "instituto")})
+    @JoinTable(name = "institute_event", joinColumns = {@JoinColumn(name = "event")}, inverseJoinColumns = {@JoinColumn(name = "institute")})
     private List<Institute> institutes;
 
     public Long getId() {

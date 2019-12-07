@@ -4,22 +4,31 @@ import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.view.console.UserScreenConsole;
 import org.hibernate.SessionFactory;
 
-
-class UserController {
+/**
+ * Controller responsible for intercepting user entity operations
+ *
+ * @author Hyago Souza
+ */
+class UserController extends AbstractController {
 
     private UserScreenConsole userScreen;
-    private SessionFactory sessionFactory;
 
+    /**
+     * Constructor's class
+     */
     UserController() {
+        super(Application.getInstance().getSessionFactory());
         userScreen = new UserScreenConsole(System.out);
-        sessionFactory = Application.getInstance().getSessionFactory();
     }
 
+    /**
+     * Show category options on screen
+     */
     void showHisOptions() {
         getUserScreen().showOptions();
     }
 
-    private UserScreenConsole getUserScreen() {
+    public UserScreenConsole getUserScreen() {
         return userScreen;
     }
 
@@ -27,11 +36,4 @@ class UserController {
         this.userScreen = userScreen;
     }
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

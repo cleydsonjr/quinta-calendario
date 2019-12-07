@@ -20,14 +20,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class EventController {
+/**
+ * Controller responsible for intercepting event entity operations
+ *
+ * @author Hyago Souza
+ */
+public class EventController extends AbstractController{
 
     private EventScreenConsole eventScreen;
-    private SessionFactory sessionFactory;
 
+    /**
+     * Constructor's class
+     */
     public EventController() {
+        super(Application.getInstance().getSessionFactory());
         setEventScreen(new EventScreenConsole(System.out));
-        setSessionFactory(Application.getInstance().getSessionFactory());
     }
 
     public boolean register(String description,
@@ -51,19 +58,19 @@ public class EventController {
             data = from(finalDate);
             event.setFinalDate(data);
 
-            event.setCategory(new CategoryService(getSessionFactory()).listById(categoryId));
+            event.setCategory(new CategoryService(getAbstractSessionFactory()).listById(categoryId));
 
             List<Institute> institutes = new ArrayList<>();
-            institutes.add(new InstitutoService(getSessionFactory()).listById(instituteId));
+            institutes.add(new InstitutoService(getAbstractSessionFactory()).listById(instituteId));
 
             event.setInstitutes(institutes);
 
             List<Regional> regionals = new ArrayList<>();
-            regionals.add(new RegionalService(getSessionFactory()).listById(regionalId));
+            regionals.add(new RegionalService(getAbstractSessionFactory()).listById(regionalId));
 
             event.setRegionais(regionals);
 
-            EventService eventService = new EventService(getSessionFactory());
+            EventService eventService = new EventService(getAbstractSessionFactory());
             eventService.save(event);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -72,6 +79,9 @@ public class EventController {
         return true;
     }
 
+    /**
+     * Show category options on screen
+     */
     void showHisOptions() {
         getEventScreen().showOptions();
     }
@@ -92,53 +102,45 @@ public class EventController {
     }
 
     public List<Event> listRecords() {
-        EventService eventService = new EventService(getSessionFactory());
+        EventService eventService = new EventService(getAbstractSessionFactory());
         return eventService.listRecords();
     }
 
     public List<Event> listRecordsByDescription(String description) {
-        EventService eventService = new EventService(getSessionFactory());
+        EventService eventService = new EventService(getAbstractSessionFactory());
         return eventService.listRecordsByDescription(description);
     }
 
     public Event listById(Integer id) {
-        EventService eventService = new EventService(getSessionFactory());
+        EventService eventService = new EventService(getAbstractSessionFactory());
         return eventService.listById(id);
     }
 
     public List<Event> listByPeriod(String initialDate, String finalDate) {
-        EventService eventService = new EventService(getSessionFactory());
+        EventService eventService = new EventService(getAbstractSessionFactory());
         return eventService.listarEventosPorPeriodo(from(initialDate), from(finalDate));
     }
 
     public List<Regional> listRegionals() {
-        RegionalService regionalService = new RegionalService(getSessionFactory());
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
         return regionalService.listRecords();
     }
 
     public List<Institute> listInstitutes() {
-        InstitutoService institutoService = new InstitutoService(getSessionFactory());
+        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
         return institutoService.listRecords();
     }
 
     public List<Category> listCategories() {
-        CategoryService categoryService = new CategoryService(getSessionFactory());
+        CategoryService categoryService = new CategoryService(getAbstractSessionFactory());
         return categoryService.listRecords();
     }
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private EventScreenConsole getEventScreen() {
+    public EventScreenConsole getEventScreen() {
         return eventScreen;
     }
 
-    private void setEventScreen(EventScreenConsole eventScreen) {
+    public void setEventScreen(EventScreenConsole eventScreen) {
         this.eventScreen = eventScreen;
     }
 }

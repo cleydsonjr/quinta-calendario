@@ -9,16 +9,26 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 import java.util.Objects;
 
-public class RegionalController {
+/**
+ * Controller responsible for intercepting regional entity operations
+ *
+ * @author Hyago Souza
+ */
+public class RegionalController extends AbstractController {
 
     private RegionalScreenConsole regionalScreen;
-    private SessionFactory sessionFactory;
 
+    /**
+     * Constructor's class
+     */
     public RegionalController() {
+        super(Application.getInstance().getSessionFactory());
         regionalScreen = new RegionalScreenConsole(System.out);
-        sessionFactory = Application.getInstance().getSessionFactory();
     }
 
+    /**
+     * Show category options on screen
+     */
     void showHisOptions() {
         getRegionalScreen().showOptions();
     }
@@ -27,32 +37,32 @@ public class RegionalController {
         Regional regional = new Regional();
         regional.setName(name);
 
-        RegionalService regionalService = new RegionalService(getSessionFactory());
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
         return regionalService.save(regional);
     }
 
     public List<Regional> listRecords() {
-        RegionalService regionalService = new RegionalService(getSessionFactory());
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
         return regionalService.listRecords();
     }
 
     public List<Regional> listRecordsByDescription(String description) {
-        RegionalService regionalService = new RegionalService(getSessionFactory());
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
         return regionalService.listRecordsByDescription(description);
     }
 
     public Regional listById(Integer id) {
-        RegionalService service = new RegionalService(getSessionFactory());
+        RegionalService service = new RegionalService(getAbstractSessionFactory());
         return service.listById(id);
     }
 
     public void edit(Integer id, String name) {
-        RegionalService regionalService = new RegionalService(getSessionFactory());
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
         regionalService.edit(id, name);
     }
 
     public void remove(Integer id) {
-        RegionalService regionalService = new RegionalService(getSessionFactory());
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
         Regional regional = regionalService.listById(id);
 
         if (Objects.isNull(regional)) {
@@ -63,7 +73,7 @@ public class RegionalController {
         }
     }
 
-    private RegionalScreenConsole getRegionalScreen() {
+    public RegionalScreenConsole getRegionalScreen() {
         return regionalScreen;
     }
 
@@ -71,11 +81,4 @@ public class RegionalController {
         this.regionalScreen = regionalScreen;
     }
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }
