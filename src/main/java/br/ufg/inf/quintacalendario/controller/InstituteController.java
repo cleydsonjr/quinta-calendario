@@ -65,7 +65,7 @@ public class InstituteController extends AbstractController {
      * @return list of records filtered by description
      * @see List<Institute>
      */
-    public List<Institute> listRecordsByDescripton(String description) {
+    public List<Institute> listRecordsByDescription(String description) {
         InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
         return institutoService.listRecordsByDescription(description);
     }
@@ -103,7 +103,7 @@ public class InstituteController extends AbstractController {
         Institute institute = institutoService.listById(id);
 
         if (Objects.isNull(institute)) {
-            System.out.println("*******Codigo invalido*******");
+            System.out.println("******* Codigo invalido *******");
             getInstituteScreen().remove();
         } else {
             institutoService.remove(id);

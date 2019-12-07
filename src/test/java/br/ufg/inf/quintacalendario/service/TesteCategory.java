@@ -1,4 +1,4 @@
-package br.ufg.inf.quintacalendario.testes.service;
+package br.ufg.inf.quintacalendario.service;
 
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.model.Category;
