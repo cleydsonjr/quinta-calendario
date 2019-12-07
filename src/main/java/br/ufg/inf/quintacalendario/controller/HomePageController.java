@@ -32,7 +32,7 @@ public class HomePageController {
                 new UserController().showHisOptions();
                 break;
             case 6:
-                TelaInicialConsole.mensagemSaida();
+                TelaInicialConsole.finishProgramExecution();
                 break;
             default:
                 break;
