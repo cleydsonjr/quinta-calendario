@@ -37,5 +37,7 @@ public class HomePageControllerTest {
 	@Test
 	public void redirectScreenByDefault() {
 		homePageControllerUnderTest.redirectScreenBy(0);
+
+		assertThat(outContent.toString(), containsString(""));
 	}
 }

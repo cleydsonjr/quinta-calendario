@@ -129,22 +129,6 @@ public class EventControllerTest {
 		assertEquals(Collections.emptyList(), events);
 	}
 
-	@Test
-	public void listByPeriod() {
-	}
-
-	@Test
-	public void listRegionals() {
-	}
-
-	@Test
-	public void listInstitutes() {
-	}
-
-	@Test
-	public void listCategories() {
-	}
-
 	public void generateTwoRandomEvents() {
 		eventControllerUnderTest.register(description, title, initialDate, finalDate, categoryId, regionalId, instituteId);
 		eventControllerUnderTest.register("Another description", title, initialDate, finalDate, categoryId, regionalId, instituteId);
