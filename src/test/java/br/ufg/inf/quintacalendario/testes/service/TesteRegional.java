@@ -1,10 +1,10 @@
 package br.ufg.inf.quintacalendario.testes.service;
 
 import br.ufg.inf.quintacalendario.main.Application;
-import br.ufg.inf.quintacalendario.model.Evento;
+import br.ufg.inf.quintacalendario.model.Event;
 import br.ufg.inf.quintacalendario.model.Regional;
-import br.ufg.inf.quintacalendario.service.CategoriaService;
-import br.ufg.inf.quintacalendario.service.EventoService;
+import br.ufg.inf.quintacalendario.service.CategoryService;
+import br.ufg.inf.quintacalendario.service.EventService;
 import br.ufg.inf.quintacalendario.service.InstitutoService;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 import org.hibernate.SessionFactory;
@@ -25,9 +25,9 @@ public class TesteRegional {
 
         limparObjetoEvento();
 
-        new EventoService(sessionFactory).limparTabela();
+        new EventService(sessionFactory).limparTabela();
         new InstitutoService(sessionFactory).limparTabela();
-        new CategoriaService(sessionFactory).limparTabela();
+        new CategoryService(sessionFactory).limparTabela();
         new RegionalService(sessionFactory).limparTabela();
     }
 
@@ -40,16 +40,16 @@ public class TesteRegional {
     public void testeSalvarRegional() {
         Regional regional = criarRegional();
 
-        boolean retorno = new RegionalService(sessionFactory).salvar(regional);
+        boolean retorno = new RegionalService(sessionFactory).save(regional);
         Assert.assertTrue(retorno);
     }
 
     @Test
     public void testeRegionalComNomeVazio() {
         Regional regional = new Regional();
-        regional.setNome("");
+        regional.setName("");
 
-        boolean retorno = new RegionalService(sessionFactory).salvar(regional);
+        boolean retorno = new RegionalService(sessionFactory).save(regional);
         Assert.assertFalse(retorno);
     }
 
@@ -57,8 +57,8 @@ public class TesteRegional {
     public void testeListarRegionaisPorDescricao() {
         RegionalService service = new RegionalService(sessionFactory);
 
-        service.salvar(criarRegional());
-        List<Regional> regionais = service.listar("Goiania");
+        service.save(criarRegional());
+        List<Regional> regionais = service.listRecordsByDescription("Goiania");
 
         Assert.assertTrue(!regionais.isEmpty());
     }
@@ -67,30 +67,30 @@ public class TesteRegional {
     public void testeAlterarRegional() {
         RegionalService service = new RegionalService(sessionFactory);
         long id = 0;
-        service.salvar(criarRegional());
+        service.save(criarRegional());
 
-        List<Regional> regionais = service.listar();
+        List<Regional> regionais = service.listRecords();
 
         if (!regionais.isEmpty()) {
             Regional regional = regionais.get(0);
             id = regional.getId();
-            service.editar(id, "Catalão");
+            service.edit(id, "Catalão");
         }
 
-        Regional regional = service.listarPorId(id);
+        Regional regional = service.listById(id);
         Assert.assertTrue(regional.getNome().equals("Catalão"));
     }
 
     public Regional criarRegional() {
         Regional regional = new Regional();
-        regional.setNome("Goiania");
+        regional.setName("Goiania");
         return regional;
     }
 
     public void limparObjetoEvento() {
-        EventoService eventoService = new EventoService(sessionFactory);
-        List<Evento> eventos = eventoService.listar();
+        EventService eventService = new EventService(sessionFactory);
+        List<Event> events = eventService.listRecords();
 
-        eventos.stream().forEach(x -> eventoService.limparObjeto(x));
+        events.stream().forEach(x -> eventService.limparObjeto(x));
     }
 }

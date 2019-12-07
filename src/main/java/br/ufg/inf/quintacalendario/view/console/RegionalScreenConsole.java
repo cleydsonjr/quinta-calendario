@@ -8,17 +8,17 @@ import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 import java.io.PrintStream;
 import java.util.List;
 
-public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaInicial {
+public class RegionalScreenConsole extends AbstractTelaCabecalho implements TelaInicial {
 
     private EntradaConsole entradaConsole;
 
-    public TelaRegionalConsole(PrintStream output) {
+    public RegionalScreenConsole(PrintStream output) {
         super(output);
         setEntradaConsole(new EntradaConsole());
     }
 
     @Override
-    public void exibaOpcoes() {
+    public void showOptions() {
         exibaCabecalho();
         desenharOpcoesInicial();
         Integer opcao = getEntradaConsole().pergunteInteiro(desenharOpcoesInicial().toString());
@@ -29,15 +29,15 @@ public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaIn
         switch (opcao) {
             case 1:
                 cadastrar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 2:
                 editar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 3:
-                remover();
-                exibaOpcoes();
+                remove();
+                showOptions();
                 break;
             case 4:
                 List<Regional> regionais = pesquisar();
@@ -46,42 +46,42 @@ public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaIn
                 } else {
                     printarRegionais(regionais);
                 }
-                exibaOpcoes();
+                showOptions();
                 break;
             case 5:
                 pesquisarPorDescricao();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 6:
-                new TelaInicialConsole(System.out).exibaOpcoes();
+                new TelaInicialConsole(System.out).showOptions();
                 break;
             case 7:
                 break;
             default:
                 System.out.println("Opção invalida");
-                exibaOpcoes();
+                showOptions();
                 break;
         }
     }
 
-    public void remover() {
+    public void remove() {
         List<Regional> regionais = pesquisar();
         if (!regionais.isEmpty()) {
             printarRegionais(regionais);
             Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da regional que deseja remover");
-            new RegionalController().remover(codigo);
+            new RegionalController().remove(codigo);
             System.out.println("Regional removida com sucesso");
         }
     }
 
     private void pesquisarPorDescricao() {
         String descricao = getEntradaConsole().pergunteString("Digite a descrição desejada", true);
-        List<Regional> regionais = new RegionalController().listar(descricao);
+        List<Regional> regionais = new RegionalController().listRecordsByDescription(descricao);
         printarRegionais(regionais);
     }
 
     private List<Regional> pesquisar() {
-        List<Regional> regionais = new RegionalController().listar();
+        List<Regional> regionais = new RegionalController().listRecords();
         return regionais;
     }
 
@@ -93,7 +93,7 @@ public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaIn
             printarRegionais(regionais);
             Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da regional que deseja editar");
 
-            Regional regional = new RegionalController().listarPorId(codigo);
+            Regional regional = new RegionalController().listById(codigo);
 
             if (regional.getNome().isEmpty()) {
                 System.out.println("Regional não encontrada");
@@ -102,7 +102,7 @@ public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaIn
                 System.out.println(regional.getId() + " - " + regional.getNome());
 
                 String nome = getEntradaConsole().pergunteString("Digite o novo nome da Regional", true);
-                new RegionalController().editar(codigo, nome);
+                new RegionalController().edit(codigo, nome);
 
                 System.out.println("Regional Alterada Com Sucesso");
             }
@@ -113,7 +113,7 @@ public class TelaRegionalConsole extends AbstractTelaCabecalho implements TelaIn
         boolean result = false;
         while (!result) {
             String nome = getEntradaConsole().pergunteString("Digite o nome da regional");
-            result = new RegionalController().cadastrar(nome);
+            result = new RegionalController().register(nome);
         }
 
         System.out.println("Regional Cadastrada Com Sucesso");

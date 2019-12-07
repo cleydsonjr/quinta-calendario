@@ -1,6 +1,6 @@
 package br.ufg.inf.quintacalendario.service;
 
-import br.ufg.inf.quintacalendario.model.Categoria;
+import br.ufg.inf.quintacalendario.model.Category;
 import br.ufg.inf.quintacalendario.repository.CategoriaRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,22 +8,22 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class CategoriaService {
+public class CategoryService {
 
     private SessionFactory sessionFactory;
 
-    public CategoriaService(SessionFactory session) {
+    public CategoryService(SessionFactory session) {
         super();
         sessionFactory = session;
     }
 
-    public boolean salvar(Categoria categoria) {
+    public boolean save(Category category) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            validarCategoria(categoria);
+            validarCategoria(category);
 
-            new CategoriaRepository(session).salvar(categoria);
+            new CategoriaRepository(session).salvar(category);
             transaction.commit();
             session.close();
 
@@ -35,24 +35,24 @@ public class CategoriaService {
         }
     }
 
-    public List<Categoria> pesquisarPorDescricao(String descricao) {
+    public List<Category> pesquisarPorDescricao(String descricao) {
         Session session = sessionFactory.openSession();
         CategoriaRepository categoriaRepository = new CategoriaRepository(session);
-        List<Categoria> categorias = categoriaRepository.listarPorDescricao(descricao);
-        return categorias;
+        List<Category> categories = categoriaRepository.listarPorDescricao(descricao);
+        return categories;
     }
 
-    public void validarCategoria(Categoria categoria) throws IllegalArgumentException {
-        if (categoria.getNome().trim().isEmpty()) {
+    public void validarCategoria(Category category) throws IllegalArgumentException {
+        if (category.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome da categoria nao pode ser vazio");
         }
 
-        if ((categoria.getNome().trim().length()) < 4) {
+        if ((category.getName().trim().length()) < 4) {
             throw new IllegalArgumentException("O node da categoria deve ter no minimo 4 caracteres");
         }
     }
 
-    public List<Categoria> listar() {
+    public List<Category> listRecords() {
         Session session = sessionFactory.openSession();
         return new CategoriaRepository(session).listar();
     }
@@ -65,31 +65,31 @@ public class CategoriaService {
         session.close();
     }
 
-    public List<Categoria> listar(String descricao) {
+    public List<Category> listRecordsByDescription(String descricao) {
         Session session = sessionFactory.openSession();
         return new CategoriaRepository(session).listarPorDescricao(descricao);
     }
 
-    public Categoria listarPorId(Integer codigo) {
+    public Category listById(Integer codigo) {
         Session session = sessionFactory.openSession();
         return new CategoriaRepository(session).listarPorId(codigo);
     }
 
-    public void editar(Integer codigo, String nome) {
+    public void edit(Integer codigo, String nome) {
         Session session = sessionFactory.openSession();
         CategoriaRepository repository = new CategoriaRepository(session);
-        Categoria categoria = repository.listarPorId(codigo);
+        Category category = repository.listarPorId(codigo);
 
         Transaction transaction = session.beginTransaction();
 
-        categoria.setNome(nome);
-        repository.atualizar(categoria);
+        category.setName(nome);
+        repository.atualizar(category);
 
         transaction.commit();
         session.close();
     }
 
-    public void remover(Integer codigo) {
+    public void remove(Integer codigo) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         new CategoriaRepository(session).remover(codigo);

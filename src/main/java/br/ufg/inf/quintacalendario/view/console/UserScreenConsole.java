@@ -1,23 +1,23 @@
 package br.ufg.inf.quintacalendario.view.console;
 
-import br.ufg.inf.quintacalendario.controller.Usuario;
+import br.ufg.inf.quintacalendario.controller.User;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 
 import java.io.PrintStream;
 
 
-public class TelaUsuarioConsole extends AbstractTelaCabecalho implements TelaInicial {
+public class UserScreenConsole extends AbstractTelaCabecalho implements TelaInicial {
 
     private EntradaConsole entradaConsole;
 
-    public TelaUsuarioConsole(PrintStream output) {
+    public UserScreenConsole(PrintStream output) {
         super(output);
         setEntradaConsole(new EntradaConsole());
     }
 
     @Override
-    public void exibaOpcoes() {
+    public void showOptions() {
         exibaCabecalho();
         desenhaOpcoes();
         realizarLogin();
@@ -73,28 +73,28 @@ public class TelaUsuarioConsole extends AbstractTelaCabecalho implements TelaIni
      *
      * @return Objeto usuário com o nome que corresponde ao login e a senha.
      */
-    public Usuario realizarLogin() {
+    public User realizarLogin() {
         exibaCabecalho();
-        Usuario usuarioLogin = new Usuario();
-        usuarioLogin.setNome(new EntradaConsole().pergunteString("- Login: \n"));
-        usuarioLogin.setSenha(new EntradaConsole().pergunteString("- Senha: "));
+        User userLogin = new User();
+        userLogin.setName(new EntradaConsole().pergunteString("- Login: \n"));
+        userLogin.setPassword(new EntradaConsole().pergunteString("- Senha: "));
         System.out.println("Opcao em desenvolvimento");
-        return usuarioLogin;
+        return userLogin;
     }
 
-    public Usuario cadastrarUsuario() {
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(new EntradaConsole().pergunteString("Novo Login: "));
-        novoUsuario.setSenha(new EntradaConsole().pergunteString("Nova Senha: "));
+    public User cadastrarUsuario() {
+        User novoUser = new User();
+        novoUser.setName(new EntradaConsole().pergunteString("Novo Login: "));
+        novoUser.setPassword(new EntradaConsole().pergunteString("Nova Senha: "));
         String confirmaSenha = new EntradaConsole().pergunteString("Confirme a senha: ");
 
-        if (novoUsuario.getSenha().equals(confirmaSenha)) {
+        if (novoUser.getPassword().equals(confirmaSenha)) {
             //Salvar no banco
         } else {
             System.out.println("As senhas não são iguais!\n");
             cadastrarUsuario();
         }
-        return novoUsuario;
+        return novoUser;
     }
 
 

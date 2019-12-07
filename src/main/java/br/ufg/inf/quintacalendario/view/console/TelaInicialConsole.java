@@ -1,6 +1,6 @@
 package br.ufg.inf.quintacalendario.view.console;
 
-import br.ufg.inf.quintacalendario.controller.TelaInicialController;
+import br.ufg.inf.quintacalendario.controller.HomePageController;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 
@@ -17,10 +17,9 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
     }
 
     @Override
-    public void exibaOpcoes() {
-        exibaCabecalho();
+    public void showOptions() {
         int opcao = new EntradaConsole().pergunteInteiro(desenharOpcoes());
-        new TelaInicialController().redirect(opcao);
+        new HomePageController().redirectScreenBy(opcao);
     }
 
     @Override

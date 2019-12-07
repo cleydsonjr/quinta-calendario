@@ -1,10 +1,10 @@
 package br.ufg.inf.quintacalendario.testes.service;
 
 import br.ufg.inf.quintacalendario.main.Application;
-import br.ufg.inf.quintacalendario.model.Evento;
-import br.ufg.inf.quintacalendario.model.Instituto;
-import br.ufg.inf.quintacalendario.service.CategoriaService;
-import br.ufg.inf.quintacalendario.service.EventoService;
+import br.ufg.inf.quintacalendario.model.Event;
+import br.ufg.inf.quintacalendario.model.Institute;
+import br.ufg.inf.quintacalendario.service.CategoryService;
+import br.ufg.inf.quintacalendario.service.EventService;
 import br.ufg.inf.quintacalendario.service.InstitutoService;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 import org.hibernate.SessionFactory;
@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class TesteInstituto {
+public class TesteInstitute {
 
     private SessionFactory sessionFactory;
 
@@ -25,9 +25,9 @@ public class TesteInstituto {
         sessionFactory = Application.getInstance().getSessionFactory();
 
         limparObjetoEvento();
-        new EventoService(sessionFactory).limparTabela();
+        new EventService(sessionFactory).limparTabela();
         new RegionalService(sessionFactory).limparTabela();
-        new CategoriaService(sessionFactory).limparTabela();
+        new CategoryService(sessionFactory).limparTabela();
         new InstitutoService(sessionFactory).limparTabela();
     }
 
@@ -38,24 +38,24 @@ public class TesteInstituto {
 
     @Test
     public void testeSalvarInstituto() {
-        Instituto instituto = new Instituto();
-        instituto.setNome("Feriado");
-        boolean retorno = new InstitutoService(sessionFactory).salvar(instituto);
+        Institute institute = new Institute();
+        institute.setName("Feriado");
+        boolean retorno = new InstitutoService(sessionFactory).salvar(institute);
         Assert.assertTrue(retorno);
     }
 
     @Test
     public void testeSalvarInstitutoComNomeVazio() {
-        Instituto instituto = new Instituto();
-        instituto.setNome("");
-        boolean retorno = new InstitutoService(sessionFactory).salvar(instituto);
+        Institute institute = new Institute();
+        institute.setName("");
+        boolean retorno = new InstitutoService(sessionFactory).salvar(institute);
         Assert.assertFalse(retorno);
     }
 
     public void limparObjetoEvento() {
-        EventoService eventoService = new EventoService(sessionFactory);
-        List<Evento> eventos = eventoService.listar();
+        EventService eventService = new EventService(sessionFactory);
+        List<Event> events = eventService.listRecords();
 
-        eventos.stream().forEach(x -> eventoService.limparObjeto(x));
+        events.stream().forEach(x -> eventService.limparObjeto(x));
     }
 }

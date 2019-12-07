@@ -1,24 +1,24 @@
 package br.ufg.inf.quintacalendario.view.console;
 
-import br.ufg.inf.quintacalendario.controller.InstitutoController;
-import br.ufg.inf.quintacalendario.model.Instituto;
+import br.ufg.inf.quintacalendario.controller.InstituteController;
+import br.ufg.inf.quintacalendario.model.Institute;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.util.EntradaConsole;
 
 import java.io.PrintStream;
 import java.util.List;
 
-public class TelaInstitutoConsole extends AbstractTelaCabecalho implements TelaInicial {
+public class InstituteScreenConsole extends AbstractTelaCabecalho implements TelaInicial {
 
     private EntradaConsole entradaConsole;
 
-    public TelaInstitutoConsole(PrintStream output) {
+    public InstituteScreenConsole(PrintStream output) {
         super(output);
         setEntradaConsole(new EntradaConsole());
     }
 
     @Override
-    public void exibaOpcoes() {
+    public void showOptions() {
         exibaCabecalho();
         desenharOpcoesInicial();
         Integer opcao = getEntradaConsole().pergunteInteiro(desenharOpcoesInicial().toString());
@@ -29,80 +29,80 @@ public class TelaInstitutoConsole extends AbstractTelaCabecalho implements TelaI
         switch (opcao) {
             case 1:
                 cadastrar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 2:
                 editar();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 3:
-                remover();
-                exibaOpcoes();
+                remove();
+                showOptions();
                 break;
             case 4:
-                List<Instituto> institutos = pesquisar();
-                if (institutos.isEmpty()) {
+                List<Institute> institutes = pesquisar();
+                if (institutes.isEmpty()) {
                     System.out.println("Não existem institutos cadastradas");
                 } else {
-                    printarinstitutos(institutos);
+                    printarinstitutos(institutes);
                 }
-                exibaOpcoes();
+                showOptions();
                 break;
             case 5:
                 pesquisarPorDescricao();
-                exibaOpcoes();
+                showOptions();
                 break;
             case 6:
-                new TelaInicialConsole(System.out).exibaOpcoes();
+                new TelaInicialConsole(System.out).showOptions();
                 break;
             case 7:
                 break;
             default:
                 System.out.println("Opção invalida");
-                exibaOpcoes();
+                showOptions();
                 break;
         }
     }
 
-    public void remover() {
-        List<Instituto> institutos = pesquisar();
-        if (!institutos.isEmpty()) {
-            printarinstitutos(institutos);
+    public void remove() {
+        List<Institute> institutes = pesquisar();
+        if (!institutes.isEmpty()) {
+            printarinstitutos(institutes);
             Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da Instituto que deseja remover");
-            new InstitutoController().remover(codigo);
+            new InstituteController().remove(codigo);
             System.out.println("Instituto removida com sucesso");
         }
     }
 
     private void pesquisarPorDescricao() {
         String descricao = getEntradaConsole().pergunteString("Digite a descrição desejada", true);
-        List<Instituto> institutos = new InstitutoController().listar(descricao);
-        printarinstitutos(institutos);
+        List<Institute> institutes = new InstituteController().listRecordsByDescripton(descricao);
+        printarinstitutos(institutes);
     }
 
-    private List<Instituto> pesquisar() {
-        List<Instituto> institutos = new InstitutoController().listar();
-        return institutos;
+    private List<Institute> pesquisar() {
+        List<Institute> institutes = new InstituteController().listRecords();
+        return institutes;
     }
 
     private void editar() {
-        List<Instituto> institutos = pesquisar();
-        if (institutos.isEmpty()) {
+        List<Institute> institutes = pesquisar();
+        if (institutes.isEmpty()) {
             System.out.println("Não existem institutos cadastrados para se realizar a alteração.");
         } else {
-            printarinstitutos(institutos);
+            printarinstitutos(institutes);
             Integer codigo = getEntradaConsole().pergunteInteiro("Digite o codigo da Instituto que deseja editar");
 
-            Instituto instituto = new InstitutoController().listarPorId(codigo);
+            Institute institute = new InstituteController().listById(codigo);
 
-            if (instituto == null) {
+            if (institute == null) {
                 System.out.println("Instituto não encontrado");
                 editar();
             } else {
-                System.out.println(instituto.getId() + " - " + instituto.getNome());
+                System.out.println(institute.getId() + " - " + institute.getNome());
 
                 String nome = getEntradaConsole().pergunteString("Digite o novo nome do Instituto", true);
-                new InstitutoController().editar(codigo, nome);
+                new InstituteController().edit(codigo, nome);
 
                 System.out.println("Instituto Alterado Com Sucesso");
             }
@@ -113,14 +113,14 @@ public class TelaInstitutoConsole extends AbstractTelaCabecalho implements TelaI
         boolean result = false;
         while (!result) {
             String nome = getEntradaConsole().pergunteString("Digite o nome do Instituto");
-            result = new InstitutoController().cadastrar(nome);
+            result = new InstituteController().register(nome);
         }
 
         System.out.println("Instituto Cadastrado Com Sucesso");
     }
 
-    private void printarinstitutos(List<Instituto> institutos) {
-        institutos.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getNome()));
+    private void printarinstitutos(List<Institute> institutes) {
+        institutes.stream().forEach(x -> System.out.println(x.getId() + " - " + x.getNome()));
     }
 
     @Override

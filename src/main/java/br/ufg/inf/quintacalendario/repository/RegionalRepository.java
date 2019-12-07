@@ -16,11 +16,11 @@ public class RegionalRepository extends AbstractRepository<Regional> {
     @Override
     public List<Regional> listarPorDescricao(String descricao) {
         StringBuilder jpql = new StringBuilder();
-        jpql.append("Select t from regional t where t.nome like :descricao");
+        jpql.append("Select t from regional t where t.nome like :description");
 
         Map<String, Object> parametros = new HashMap<String, Object>();
 
-        parametros.put("descricao", "%" + descricao + "%");
+        parametros.put("description", "%" + descricao + "%");
 
         List<Regional> regionais = select(jpql.toString(), parametros);
         return regionais;

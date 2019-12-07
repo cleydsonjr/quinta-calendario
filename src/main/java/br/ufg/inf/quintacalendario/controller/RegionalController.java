@@ -3,79 +3,131 @@ package br.ufg.inf.quintacalendario.controller;
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.model.Regional;
 import br.ufg.inf.quintacalendario.service.RegionalService;
-import br.ufg.inf.quintacalendario.view.console.TelaRegionalConsole;
-import org.hibernate.SessionFactory;
+import br.ufg.inf.quintacalendario.view.console.RegionalScreenConsole;
 
 import java.util.List;
+import java.util.Objects;
 
-public class RegionalController {
+/**
+ * Controller responsible for intercepting regional entity operations, extend AbstractController class
+ *
+ * @author Hyago Souza
+ * @see AbstractController
+ */
+public class RegionalController extends AbstractController {
 
-    private TelaRegionalConsole tela;
-    private SessionFactory sessionFactory;
+    private RegionalScreenConsole regionalScreen;
 
+    /**
+     * Constructor's class
+     */
     public RegionalController() {
-        tela = new TelaRegionalConsole(System.out);
-        sessionFactory = Application.getInstance().getSessionFactory();
+        super(Application.getInstance().getSessionFactory());
+        regionalScreen = new RegionalScreenConsole(System.out);
     }
 
-    public void exibaOpcoes() {
-        getTela().exibaOpcoes();
+    /**
+     * Show category options on screen
+     */
+    void showHisOptions() {
+        getRegionalScreen().showOptions();
     }
 
-    public boolean cadastrar(String nome) {
+    /**
+     * Register a new regional with received name
+     *
+     * @param name name of regional to create
+     * @return boolean representing success or error
+     */
+    public boolean register(String name) {
         Regional regional = new Regional();
-        regional.setNome(nome);
+        regional.setName(name);
 
-        RegionalService service = new RegionalService(getSessionFactory());
-        return service.salvar(regional);
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
+        return regionalService.save(regional);
     }
 
-    public List<Regional> listar() {
-        RegionalService service = new RegionalService(getSessionFactory());
-        return service.listar();
+    /**
+     * Returns all regional records on database
+     *
+     * @return list of records
+     * @see List<Regional>
+     */
+    public List<Regional> listRecords() {
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
+        return regionalService.listRecords();
     }
 
-    public List<Regional> listar(String descricao) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        return service.listar(descricao);
+    /**
+     * Returns all regional records on database filtering by their description
+     *
+     * @param description field used on query filter
+     * @return list of records filtered by description
+     * @see List<Regional>
+     */
+    public List<Regional> listRecordsByDescription(String description) {
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
+        return regionalService.listRecordsByDescription(description);
     }
 
-    public Regional listarPorId(Integer codigo) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        Regional regional = service.listarPorId(codigo);
-        return regional;
+    /**
+     * Returns a single regional record on database filtering by your id
+     *
+     * @param id regional identifier
+     * @return regional with specified identifier
+     * @see Regional
+     */
+    public Regional listById(Integer id) {
+        RegionalService service = new RegionalService(getAbstractSessionFactory());
+        return service.listById(id);
     }
 
-    public void editar(Integer codigo, String nome) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        service.editar(codigo, nome);
+    /**
+     * Edit a specific regional
+     *
+     * @param id regional identifier
+     * @param name regional name
+     */
+    public void edit(Integer id, String name) {
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
+        regionalService.edit(id, name);
     }
 
-    public void remover(Integer codigo) {
-        RegionalService service = new RegionalService(getSessionFactory());
-        Regional regional = service.listarPorId(codigo);
-        if (regional == null) {
+    /**
+     * Remove a specific regional of records
+     *
+     * @param id regional identifier
+     */
+    public void remove(Integer id) {
+        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
+        Regional regional = regionalService.listById(id);
+
+        if (Objects.isNull(regional)) {
             System.out.println("*******Codigo invalido*******");
-            System.out.println("");
-            getTela().remover();
+            getRegionalScreen().remove();
         } else {
-            service.remover(codigo);
+            regionalService.remove(id);
         }
     }
 
-    public TelaRegionalConsole getTela() {
-        return tela;
+    /**
+     * Returns screen console of regional entity
+     *
+     * @return regional screen console
+     * @see RegionalScreenConsole
+     */
+    public RegionalScreenConsole getRegionalScreen() {
+        return regionalScreen;
     }
 
-    public void setTela(TelaRegionalConsole tela) {
-        this.tela = tela;
+    /**
+     * Attribute a regional screen console to entity
+     *
+     * @param regionalScreen regional screen console
+     * @see RegionalScreenConsole
+     */
+    public void setRegionalScreen(RegionalScreenConsole regionalScreen) {
+        this.regionalScreen = regionalScreen;
     }
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

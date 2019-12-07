@@ -6,6 +6,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 public class AbstractTelaCabecalho implements TelaCabecalho, OutputAware {
     private static final String CAMINHO_CABECALHO = "/view/cabecalho.txt";
@@ -29,7 +30,7 @@ public class AbstractTelaCabecalho implements TelaCabecalho, OutputAware {
     private void carregueCabecalho() {
         InputStream inputStream = this.getClass().getResourceAsStream(CAMINHO_CABECALHO);
         try {
-            this.conteudoCabecalho = IOUtils.toString(inputStream, "UTF-8");
+            this.conteudoCabecalho = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         } catch (IOException ignored) {
             this.conteudoCabecalho = "";
         }
