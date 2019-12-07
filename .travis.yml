@@ -1,3 +1,5 @@
+install: gradle wrapper --gradle-version 4.2
+
 language: java
 addons:
   sonarcloud:
@@ -7,3 +9,5 @@ addons:
 
 script:
   - ./gradlew sonarqube
+jdk:
+  - oraclejdk8
