@@ -76,7 +76,7 @@ public class InstituteScreenConsole extends AbstractTelaCabecalho implements Tel
 
     private void pesquisarPorDescricao() {
         String descricao = getEntradaConsole().pergunteString("Digite a descrição desejada", true);
-        List<Institute> institutes = new InstituteController().listRecordsByDescripton(descricao);
+        List<Institute> institutes = new InstituteController().listRecordsByDescription(descricao);
         printarinstitutos(institutes);
     }
 

@@ -12,8 +12,9 @@ public class TelaInicialConsole extends AbstractTelaCabecalho implements TelaIni
         super(output);
     }
 
-    public static void mensagemSaida() {
+    public static void finishProgramExecution() {
         System.out.println(" - Finalizando programa - ");
+        System.exit(0);
     }
 
     @Override
