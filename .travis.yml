@@ -5,9 +5,7 @@ addons:
   sonarcloud:
     organization: "hyagosouzza"
     token:
-      secure: "travis encrypt 9ea1c88e4986136507e23fa765e7deeb8de5a973"
+      secure: "9ea1c88e4986136507e23fa765e7deeb8de5a973"
 
 script:
   - ./gradlew sonarqube
-jdk:
-  - oraclejdk8
