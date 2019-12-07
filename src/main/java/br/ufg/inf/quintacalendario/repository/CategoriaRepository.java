@@ -16,10 +16,10 @@ public class CategoriaRepository extends AbstractRepository<Category> {
     @Override
     public List<Category> listarPorDescricao(String descricao) {
         StringBuilder jpql = new StringBuilder();
-        jpql.append("Select t from categoria t where t.nome like :descricao");
+        jpql.append("Select t from category t where t.name like :description");
 
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("descricao", "%" + descricao + "%");
+        parametros.put("description", "%" + descricao + "%");
 
         List<Category> categories = select(jpql.toString(), parametros);
         return categories;

@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Controller responsible for intercepting category entity operations
+ * Controller responsible for intercepting category entity operations, extend AbstractController class
  *
  * @author Hyago Souza
+ * @see AbstractController
  */
 public class CategoryController extends AbstractController {
 

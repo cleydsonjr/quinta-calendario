@@ -21,126 +21,199 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Controller responsible for intercepting event entity operations
+ * Controller responsible for intercepting event entity operations, extend AbstractController class
  *
  * @author Hyago Souza
+ * @see AbstractController
  */
-public class EventController extends AbstractController{
+public class EventController extends AbstractController {
 
-    private EventScreenConsole eventScreen;
+	private EventScreenConsole eventScreen;
+
+	/**
+	 * Constructor's class
+	 */
+	public EventController() {
+		super(Application.getInstance().getSessionFactory());
+		setEventScreen(new EventScreenConsole(System.out));
+	}
+
+	/**
+	 * Register a new event with received params
+	 *
+	 * @param description description of event to create
+	 * @param title       title of event to create
+	 * @param initialDate initial date of event to create
+	 * @param finalDate   final date of event to create
+	 * @param categoryId   category identifier of event to create
+	 * @param regionalId   regional identifier of event to create
+	 * @param instituteId   institute identifier of event to create
+	 * @return boolean representing success or error
+     * @exception Exception
+	 */
+	public boolean register(String description,
+							String title,
+							String initialDate,
+							String finalDate,
+							Integer categoryId,
+							Integer regionalId,
+							Integer instituteId
+	) {
+
+		try {
+			Event event = new Event();
+
+			event.setDescription(description);
+			event.setTitle(title);
+
+			Date data = from(initialDate);
+			event.setInitialDate(data);
+
+			data = from(finalDate);
+			event.setFinalDate(data);
+
+			event.setCategory(new CategoryService(getAbstractSessionFactory()).listById(categoryId));
+
+			List<Institute> institutes = new ArrayList<>();
+			institutes.add(new InstitutoService(getAbstractSessionFactory()).listById(instituteId));
+
+			event.setInstitutes(institutes);
+
+			List<Regional> regionals = new ArrayList<>();
+			regionals.add(new RegionalService(getAbstractSessionFactory()).listById(regionalId));
+
+			event.setRegionais(regionals);
+
+			EventService eventService = new EventService(getAbstractSessionFactory());
+			eventService.save(event);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Show category options on screen
+	 */
+	void showHisOptions() {
+		getEventScreen().showOptions();
+	}
 
     /**
-     * Constructor's class
+     * Convert a string to date
+     *
+     * @param date string representing a date
+     * @return Date converted date
+     * @exception ParseException
      */
-    public EventController() {
-        super(Application.getInstance().getSessionFactory());
-        setEventScreen(new EventScreenConsole(System.out));
-    }
+	private Date from(String date) {
+		if (Objects.isNull(date) || date.isEmpty()) {
+			return null;
+		}
 
-    public boolean register(String description,
-                            String title,
-                            String initialDate,
-                            String finalDate,
-                            Integer categoryId,
-                            Integer regionalId,
-                            Integer instituteId
-    ) {
+		Date newDate = null;
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			newDate = formatter.parse(date);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		return newDate;
+	}
 
-        try {
-            Event event = new Event();
+	/**
+	 * Returns all event records on database
+	 *
+	 * @return list of records
+	 * @see List<Event>
+	 */
+	public List<Event> listRecords() {
+		EventService eventService = new EventService(getAbstractSessionFactory());
+		return eventService.listRecords();
+	}
 
-            event.setDescription(description);
-            event.setTitle(title);
+	/**
+	 * Returns all event records on database filtering by their description
+	 *
+	 * @param description field used on query filter
+	 * @return list of records filtered by description
+	 * @see List<Event>
+	 */
+	public List<Event> listRecordsByDescription(String description) {
+		EventService eventService = new EventService(getAbstractSessionFactory());
+		return eventService.listRecordsByDescription(description);
+	}
 
-            Date data = from(initialDate);
-            event.setInitialDate(data);
-
-            data = from(finalDate);
-            event.setFinalDate(data);
-
-            event.setCategory(new CategoryService(getAbstractSessionFactory()).listById(categoryId));
-
-            List<Institute> institutes = new ArrayList<>();
-            institutes.add(new InstitutoService(getAbstractSessionFactory()).listById(instituteId));
-
-            event.setInstitutes(institutes);
-
-            List<Regional> regionals = new ArrayList<>();
-            regionals.add(new RegionalService(getAbstractSessionFactory()).listById(regionalId));
-
-            event.setRegionais(regionals);
-
-            EventService eventService = new EventService(getAbstractSessionFactory());
-            eventService.save(event);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Returns a single event record on database filtering by your id
+	 *
+	 * @param id event identifier
+	 * @return event with specified identifier
+	 * @see Event
+	 */
+	public Event listById(Integer id) {
+		EventService eventService = new EventService(getAbstractSessionFactory());
+		return eventService.listById(id);
+	}
 
     /**
-     * Show category options on screen
+     * Returns a list of event records filtering by your dates
+     *
+     * @param initialDate initial date of event
+     * @param finalDate final date of event
+     * @return records with matching dates
+     * @see List<Event>
      */
-    void showHisOptions() {
-        getEventScreen().showOptions();
-    }
+	public List<Event> listByPeriod(String initialDate, String finalDate) {
+		EventService eventService = new EventService(getAbstractSessionFactory());
+		return eventService.listarEventosPorPeriodo(from(initialDate), from(finalDate));
+	}
 
-    private Date from(String date) {
-        if (Objects.isNull(date) || date.isEmpty()) {
-            return null;
-        }
+    /**
+     *
+     * @see RegionalController#listRecords()
+     */
+	public List<Regional> listRegionals() {
+		RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
+		return regionalService.listRecords();
+	}
 
-        Date newDate = null;
-        try {
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            newDate = formatter.parse(date);
-        } catch (ParseException e) {
-            System.out.println(e.getMessage());
-        }
-        return newDate;
-    }
+    /**
+     *
+     * @see InstituteController#listRecords()
+     */
+	public List<Institute> listInstitutes() {
+		InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
+		return institutoService.listRecords();
+	}
 
-    public List<Event> listRecords() {
-        EventService eventService = new EventService(getAbstractSessionFactory());
-        return eventService.listRecords();
-    }
+    /**
+     *
+     * @see CategoryController#listRecords()
+     */
+	public List<Category> listCategories() {
+		CategoryService categoryService = new CategoryService(getAbstractSessionFactory());
+		return categoryService.listRecords();
+	}
 
-    public List<Event> listRecordsByDescription(String description) {
-        EventService eventService = new EventService(getAbstractSessionFactory());
-        return eventService.listRecordsByDescription(description);
-    }
+	/**
+	 * Returns screen console of event entity
+	 *
+	 * @return event screen console
+	 * @see EventScreenConsole
+	 */
+	public EventScreenConsole getEventScreen() {
+		return eventScreen;
+	}
 
-    public Event listById(Integer id) {
-        EventService eventService = new EventService(getAbstractSessionFactory());
-        return eventService.listById(id);
-    }
-
-    public List<Event> listByPeriod(String initialDate, String finalDate) {
-        EventService eventService = new EventService(getAbstractSessionFactory());
-        return eventService.listarEventosPorPeriodo(from(initialDate), from(finalDate));
-    }
-
-    public List<Regional> listRegionals() {
-        RegionalService regionalService = new RegionalService(getAbstractSessionFactory());
-        return regionalService.listRecords();
-    }
-
-    public List<Institute> listInstitutes() {
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        return institutoService.listRecords();
-    }
-
-    public List<Category> listCategories() {
-        CategoryService categoryService = new CategoryService(getAbstractSessionFactory());
-        return categoryService.listRecords();
-    }
-
-    public EventScreenConsole getEventScreen() {
-        return eventScreen;
-    }
-
-    public void setEventScreen(EventScreenConsole eventScreen) {
-        this.eventScreen = eventScreen;
-    }
+	/**
+	 * Attribute a event screen console to entity
+	 *
+	 * @param eventScreen event screen console
+	 * @see EventScreenConsole
+	 */
+	public void setEventScreen(EventScreenConsole eventScreen) {
+		this.eventScreen = eventScreen;
+	}
 }
