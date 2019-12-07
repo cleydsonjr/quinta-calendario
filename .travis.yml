@@ -4,6 +4,7 @@ addons:
     organization: "hyagosouzza"
     token:
       secure: "9ea1c88e4986136507e23fa765e7deeb8de5a973"
-
+before_script:
+  - chmod +x gradlew
 script:
   - ./gradlew sonarqube
