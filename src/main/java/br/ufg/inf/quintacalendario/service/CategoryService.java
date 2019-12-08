@@ -41,7 +41,7 @@ public class CategoryService {
         return categoryRepository.listarPorDescricao(description);
     }
 
-    public void validateCategory(Category category) throws IllegalArgumentException {
+    private void validateCategory(Category category) throws IllegalArgumentException {
         if (category.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome da categoria nao pode ser vazio");
         }

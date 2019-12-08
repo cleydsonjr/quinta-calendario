@@ -15,15 +15,13 @@ public class EventService {
 
     public EventService(SessionFactory sessionFactory) {
         super();
-        this.setSessionFactory(sessionFactory);
+        this.sessionFactory = sessionFactory;
     }
 
     public boolean save(Event event) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            validarEvento(event);
-
             new EventoRepository(session).salvar(event);
             transaction.commit();
             session.close();
@@ -37,11 +35,11 @@ public class EventService {
         }
     }
 
-    public void atualizar(Event event) {
+    public void edit(Event event) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        EventoRepository eventoRepository = new EventoRepository(session);
-        eventoRepository.atualizar(event);
+        EventoRepository eventRepository = new EventoRepository(session);
+        eventRepository.atualizar(event);
         transaction.commit();
     }
 
@@ -50,10 +48,9 @@ public class EventService {
         return new EventoRepository(session).listar();
     }
 
-    public List<Event> listRecordsByDescription(String descricao) {
+    public List<Event> listRecordsByDescription(String description) {
         Session session = sessionFactory.openSession();
-        List<Event> events = new EventoRepository(session).listarPorDescricao(descricao);
-        return events;
+        return new EventoRepository(session).listarPorDescricao(description);
     }
 
     public Event listById(long id) {
@@ -61,33 +58,33 @@ public class EventService {
         return new EventoRepository(session).listarPorId(id);
     }
 
-    public List<Event> listarPorCategoria(long idCategoria) {
+    public List<Event> listByCategory(long categoryId) {
         Session session = sessionFactory.openSession();
-        return new EventoRepository(session).listarPorCategoria(idCategoria);
+        return new EventoRepository(session).listarPorCategoria(categoryId);
     }
 
-    public List<Event> listarPorInstituto(long idInstituto) {
+    public List<Event> listByInstitute(long instituteId) {
         Session session = sessionFactory.openSession();
-        return new EventoRepository(session).listarPorInstituto(idInstituto);
+        return new EventoRepository(session).listarPorInstituto(instituteId);
     }
 
-    public List<Event> listarPorRegional(long idRegional) {
+    public List<Event> listByRegional(long regionalId) {
         Session session = sessionFactory.openSession();
-        return new EventoRepository(session).listarPorRegional(idRegional);
+        return new EventoRepository(session).listarPorRegional(regionalId);
     }
 
-    public List<Event> listarEventosPorPeriodo(Date dataInicial, Date dataFinal) {
+    public List<Event> listByPeriod(Date startDate, Date endDate) {
         Session session = sessionFactory.openSession();
-        return new EventoRepository(session).listarPorPeriodo(dataInicial, dataFinal);
+        return new EventoRepository(session).listarPorPeriodo(startDate, endDate);
     }
 
-    public List<Event> listarEventosPorData(Date dataInicial) {
+    public List<Event> listByDate(Date date) {
         Session session = sessionFactory.openSession();
-        return new EventoRepository(session).listarPorData(dataInicial);
+        return new EventoRepository(session).listarPorData(date);
 
     }
 
-    public void limparTabela() {
+    public void truncateTable() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         new EventoRepository(session).limparTabela();
@@ -95,29 +92,25 @@ public class EventService {
         session.close();
     }
 
-    public void removerCategoriasEvento(Event event) {
+    private void deleteCategory(Event event) {
         event.setCategory(null);
     }
 
-    public void removerInstitutoEvento(Event event) {
+    private void deleteInstitute(Event event) {
         event.getInstitutes().clear();
     }
 
-    public void removerRegionalEvento(Event event) {
+    private void deleteRegionals(Event event) {
         event.getRegionais().clear();
     }
 
-    private void validarEvento(Event event) {
-        // TODO Criar validacoes de evento
-    }
-
-    public void limparObjeto(Event event) {
+    public void clearObject(Event event) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
-        removerCategoriasEvento(event);
-        removerInstitutoEvento(event);
-        removerRegionalEvento(event);
+        deleteCategory(event);
+        deleteInstitute(event);
+        deleteRegionals(event);
 
         new EventoRepository(session).atualizar(event);
         transaction.commit();

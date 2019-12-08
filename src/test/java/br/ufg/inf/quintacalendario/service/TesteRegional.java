@@ -3,10 +3,6 @@ package br.ufg.inf.quintacalendario.service;
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.model.Event;
 import br.ufg.inf.quintacalendario.model.Regional;
-import br.ufg.inf.quintacalendario.service.CategoryService;
-import br.ufg.inf.quintacalendario.service.EventService;
-import br.ufg.inf.quintacalendario.service.InstitutoService;
-import br.ufg.inf.quintacalendario.service.RegionalService;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Assert;
@@ -25,9 +21,9 @@ public class TesteRegional {
 
         limparObjetoEvento();
 
-        new EventService(sessionFactory).limparTabela();
+        new EventService(sessionFactory).truncateTable();
         new InstitutoService(sessionFactory).limparTabela();
-        new CategoryService(sessionFactory).limparTabela();
+        new CategoryService(sessionFactory).truncateTable();
         new RegionalService(sessionFactory).limparTabela();
     }
 
@@ -91,6 +87,6 @@ public class TesteRegional {
         EventService eventService = new EventService(sessionFactory);
         List<Event> events = eventService.listRecords();
 
-        events.stream().forEach(x -> eventService.limparObjeto(x));
+        events.stream().forEach(x -> eventService.clearObject(x));
     }
 }

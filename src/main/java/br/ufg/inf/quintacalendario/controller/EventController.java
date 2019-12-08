@@ -166,7 +166,7 @@ public class EventController extends AbstractController {
      */
 	public List<Event> listByPeriod(String initialDate, String finalDate) {
 		EventService eventService = new EventService(getAbstractSessionFactory());
-		return eventService.listarEventosPorPeriodo(from(initialDate), from(finalDate));
+		return eventService.listByPeriod(from(initialDate), from(finalDate));
 	}
 
     /**

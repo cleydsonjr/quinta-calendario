@@ -5,10 +5,6 @@ import br.ufg.inf.quintacalendario.model.Category;
 import br.ufg.inf.quintacalendario.model.Event;
 import br.ufg.inf.quintacalendario.model.Institute;
 import br.ufg.inf.quintacalendario.model.Regional;
-import br.ufg.inf.quintacalendario.service.CategoryService;
-import br.ufg.inf.quintacalendario.service.EventService;
-import br.ufg.inf.quintacalendario.service.InstitutoService;
-import br.ufg.inf.quintacalendario.service.RegionalService;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Assert;
@@ -27,10 +23,10 @@ public class TesteEvent {
         sessionFactory = Application.getInstance().getSessionFactory();
 
         limparObjeto();
-        new EventService(sessionFactory).limparTabela();
+        new EventService(sessionFactory).truncateTable();
         new InstitutoService(sessionFactory).limparTabela();
         new RegionalService(sessionFactory).limparTabela();
-        new CategoryService(sessionFactory).limparTabela();
+        new CategoryService(sessionFactory).truncateTable();
     }
 
     @After
@@ -38,7 +34,7 @@ public class TesteEvent {
         limparObjeto();
 
         EventService eventService = new EventService(sessionFactory);
-        eventService.limparTabela();
+        eventService.truncateTable();
     }
 
     @Test
@@ -65,7 +61,7 @@ public class TesteEvent {
             event = events.get(0);
             idEvento = event.getId();
             event.setDescription("Novo Evento");
-            eventService.atualizar(event);
+            eventService.edit(event);
         }
 
         if (idEvento > 0) {
@@ -97,7 +93,7 @@ public class TesteEvent {
 
 
         if (!(category == null)) {
-            List<Event> events = eventService.listarPorCategoria(category.getId());
+            List<Event> events = eventService.listByCategory(category.getId());
             Assert.assertTrue(!events.isEmpty());
         } else {
             Assert.assertTrue(eventosListados);
@@ -123,7 +119,7 @@ public class TesteEvent {
         }
 
         if (!(institute == null)) {
-            List<Event> events = eventService.listarPorInstituto(institute.getId());
+            List<Event> events = eventService.listByInstitute(institute.getId());
             Assert.assertTrue(!events.isEmpty());
         } else {
             Assert.assertTrue(eventosListados);
@@ -150,7 +146,7 @@ public class TesteEvent {
         }
 
         if (!(regional == null)) {
-            List<Event> events = eventService.listarPorRegional(regional.getId());
+            List<Event> events = eventService.listByRegional(regional.getId());
             Assert.assertTrue(!events.isEmpty());
         } else {
             Assert.assertTrue(eventosListados);
@@ -176,7 +172,7 @@ public class TesteEvent {
         eventService.save(event);
 
 
-        List<Event> events = eventService.listarEventosPorPeriodo(new Date(2016, 11, 24), new Date(2016, 12, 24));
+        List<Event> events = eventService.listByPeriod(new Date(2016, 11, 24), new Date(2016, 12, 24));
 
         Assert.assertTrue(events.size() == 1);
     }
@@ -194,7 +190,7 @@ public class TesteEvent {
         event.setInitialDate(new Date(2015, 11, 24));
         eventService.save(event);
 
-        List<Event> events = eventService.listarEventosPorData(new Date(2016, 11, 24));
+        List<Event> events = eventService.listByDate(new Date(2016, 11, 24));
 
         Assert.assertTrue(events.size() == 1);
 
@@ -204,7 +200,7 @@ public class TesteEvent {
         EventService eventService = new EventService(sessionFactory);
         List<Event> events = eventService.listRecords();
 
-        events.stream().forEach(x -> eventService.limparObjeto(x));
+        events.stream().forEach(x -> eventService.clearObject(x));
     }
 
     public Event criarEvento() {
@@ -246,7 +242,7 @@ public class TesteEvent {
 
     public Category pesquisarCategoriaPorDescricao() {
         CategoryService categoryService = new CategoryService(sessionFactory);
-        List<Category> categories = categoryService.pesquisarPorDescricao("Feriado");
+        List<Category> categories = categoryService.searchByDescription("Feriado");
         if (!categories.isEmpty()) {
             return categories.get(0);
         }

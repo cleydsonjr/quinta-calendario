@@ -51,15 +51,15 @@ public class EventControllerTest {
 
 		limparObjetoEvento();
 		new RegionalService(sessionFactory).limparTabela();
-		new EventService(sessionFactory).limparTabela();
+		new EventService(sessionFactory).truncateTable();
 		new InstitutoService(sessionFactory).limparTabela();
-		new CategoryService(sessionFactory).limparTabela();
+		new CategoryService(sessionFactory).truncateTable();
 	}
 
 	@After
 	public void restoreStreams() {
 		System.setOut(originalOut);
-		new EventService(sessionFactory).limparTabela();
+		new EventService(sessionFactory).truncateTable();
 	}
 
 	@Test
@@ -151,6 +151,6 @@ public class EventControllerTest {
 		EventService eventService = new EventService(sessionFactory);
 		List<Event> events = eventService.listRecords();
 
-		events.forEach(eventService::limparObjeto);
+		events.forEach(eventService::clearObject);
 	}
 }
