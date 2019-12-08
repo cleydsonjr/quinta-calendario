@@ -8,15 +8,29 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+/**
+ * Service responsible for validating and communicating with the CategoryRepository.
+ *
+ * @author Joao Pedro Pinheiro
+ */
 public class CategoryService {
 
     private SessionFactory sessionFactory;
 
-    public CategoryService(SessionFactory session) {
+    /**
+     * Class's default constructor
+     * @param sessionFactory entity's SessionFactory
+     */
+    public CategoryService(SessionFactory sessionFactory) {
         super();
-        sessionFactory = session;
+        this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Persist the object into the Database
+     * @param category category to be persisted
+     * @return true if the operation was successful or false if it wasn't
+     */
     public boolean save(Category category) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -35,12 +49,11 @@ public class CategoryService {
         }
     }
 
-    public List<Category> searchByDescription(String description) {
-        Session session = sessionFactory.openSession();
-        CategoriaRepository categoryRepository = new CategoriaRepository(session);
-        return categoryRepository.listarPorDescricao(description);
-    }
-
+    /**
+     * Validate a single instance of Category
+     * @param category category to be validated
+     * @throws IllegalArgumentException Validation unsuccessful
+     */
     private void validateCategory(Category category) throws IllegalArgumentException {
         if (category.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome da categoria nao pode ser vazio");
@@ -51,11 +64,18 @@ public class CategoryService {
         }
     }
 
+    /**
+     * List all categories
+     * @return a list of categories
+     */
     public List<Category> listRecords() {
         Session session = sessionFactory.openSession();
         return new CategoriaRepository(session).listar();
     }
 
+    /**
+     * Delete all categories in the database
+     */
     public void truncateTable() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -64,16 +84,31 @@ public class CategoryService {
         session.close();
     }
 
-    public List<Category> listRecordsByDescription(String descricao) {
+    /**
+     * List categories by description
+     * @param description description to be searched by
+     * @return a list of categories
+     */
+    public List<Category> listRecordsByDescription(String description) {
         Session session = sessionFactory.openSession();
-        return new CategoriaRepository(session).listarPorDescricao(descricao);
+        return new CategoriaRepository(session).listarPorDescricao(description);
     }
 
+    /**
+     * Get single category by id
+     * @param id id to be searched by
+     * @return a Category
+     */
     public Category listById(Integer id) {
         Session session = sessionFactory.openSession();
         return new CategoriaRepository(session).listarPorId(id);
     }
 
+    /**
+     * Edit one instance of category in the database
+     * @param id id of the category to be edited
+     * @param name new category's name
+     */
     public void edit(Integer id, String name) {
         Session session = sessionFactory.openSession();
         CategoriaRepository repository = new CategoriaRepository(session);
@@ -88,6 +123,10 @@ public class CategoryService {
         session.close();
     }
 
+    /**
+     * Delete a single category in the database
+     * @param id id of the category to be deleted
+     */
     public void remove(Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

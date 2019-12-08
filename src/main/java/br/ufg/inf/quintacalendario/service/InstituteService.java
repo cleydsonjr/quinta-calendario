@@ -8,14 +8,28 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+/**
+ * Service responsible for validating and communicating with the InstituteRepository.
+ *
+ * @author Joao Pedro Pinheiro
+ */
 public class InstituteService {
     private SessionFactory sessionFactory;
 
-    public InstituteService(SessionFactory session) {
+    /**
+     * Class's default constructor
+     * @param sessionFactory entity's SessionFactory
+     */
+    public InstituteService(SessionFactory sessionFactory) {
         super();
-        sessionFactory = session;
+        this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Persist the object into the Database
+     * @param institute institute to be persisted
+     * @return true if the operation was successful or false if it wasn't
+     */
     public boolean save(Institute institute) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -35,7 +49,12 @@ public class InstituteService {
         }
     }
 
-    private void validadeInstitute(Institute institute) {
+    /**
+     * Validate a single instance of Institute
+     * @param institute institute to be validated
+     * @throws IllegalArgumentException Validation unsuccessful
+     */
+    private void validadeInstitute(Institute institute) throws IllegalArgumentException {
         if (institute.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do instituto nao pode ser vazio");
         }
@@ -45,11 +64,18 @@ public class InstituteService {
         }
     }
 
+    /**
+     * List all institutes
+     * @return a list of institutes
+     */
     public List<Institute> listRecords() {
         Session session = sessionFactory.openSession();
         return new InstitutoRepository(session).listar();
     }
 
+    /**
+     * Delete all records in the database
+     */
     public void truncateTable() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -58,16 +84,31 @@ public class InstituteService {
         session.close();
     }
 
+    /**
+     * List institutes by description
+     * @param description description to be searched by
+     * @return a list of institutes
+     */
     public List<Institute> listRecordsByDescription(String description) {
         Session session = sessionFactory.openSession();
         return new InstitutoRepository(session).listarPorDescricao(description);
     }
 
+    /**
+     * List institutes by id
+     * @param id id to be searched by
+     * @return a list of institutes
+     */
     public Institute listById(Integer id) {
         Session session = sessionFactory.openSession();
         return new InstitutoRepository(session).listarPorId(id);
     }
 
+    /**
+     * Edit one instance of institute in the database
+     * @param id id of the institute to be edited
+     * @param name new institute's name
+     */
     public void edit(Integer id, String name) {
         Session session = sessionFactory.openSession();
         InstitutoRepository instituteRepository = new InstitutoRepository(session);
@@ -82,6 +123,10 @@ public class InstituteService {
         session.close();
     }
 
+    /**
+     * Remove a single institute from the database
+     * @param id id of the institute to be removed
+     */
     public void remove(Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
