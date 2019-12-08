@@ -21,7 +21,7 @@ public class CategoryService {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            validarCategoria(category);
+            validateCategory(category);
 
             new CategoriaRepository(session).salvar(category);
             transaction.commit();
@@ -35,14 +35,13 @@ public class CategoryService {
         }
     }
 
-    public List<Category> pesquisarPorDescricao(String descricao) {
+    public List<Category> searchByDescription(String description) {
         Session session = sessionFactory.openSession();
-        CategoriaRepository categoriaRepository = new CategoriaRepository(session);
-        List<Category> categories = categoriaRepository.listarPorDescricao(descricao);
-        return categories;
+        CategoriaRepository categoryRepository = new CategoriaRepository(session);
+        return categoryRepository.listarPorDescricao(description);
     }
 
-    public void validarCategoria(Category category) throws IllegalArgumentException {
+    public void validateCategory(Category category) throws IllegalArgumentException {
         if (category.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome da categoria nao pode ser vazio");
         }
@@ -57,7 +56,7 @@ public class CategoryService {
         return new CategoriaRepository(session).listar();
     }
 
-    public void limparTabela() {
+    public void truncateTable() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         new CategoriaRepository(session).limparTabela();
@@ -70,29 +69,29 @@ public class CategoryService {
         return new CategoriaRepository(session).listarPorDescricao(descricao);
     }
 
-    public Category listById(Integer codigo) {
+    public Category listById(Integer id) {
         Session session = sessionFactory.openSession();
-        return new CategoriaRepository(session).listarPorId(codigo);
+        return new CategoriaRepository(session).listarPorId(id);
     }
 
-    public void edit(Integer codigo, String nome) {
+    public void edit(Integer id, String name) {
         Session session = sessionFactory.openSession();
         CategoriaRepository repository = new CategoriaRepository(session);
-        Category category = repository.listarPorId(codigo);
+        Category category = repository.listarPorId(id);
 
         Transaction transaction = session.beginTransaction();
 
-        category.setName(nome);
+        category.setName(name);
         repository.atualizar(category);
 
         transaction.commit();
         session.close();
     }
 
-    public void remove(Integer codigo) {
+    public void remove(Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        new CategoriaRepository(session).remover(codigo);
+        new CategoriaRepository(session).remover(id);
         transaction.commit();
         session.close();
     }
