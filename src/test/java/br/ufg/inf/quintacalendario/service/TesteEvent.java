@@ -25,7 +25,7 @@ public class TesteEvent {
         limparObjeto();
         new EventService(sessionFactory).truncateTable();
         new InstituteService(sessionFactory).truncateTable();
-        new RegionalService(sessionFactory).limparTabela();
+        new RegionalService(sessionFactory).truncateTable();
         new CategoryService(sessionFactory).truncateTable();
     }
 

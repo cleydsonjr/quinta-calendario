@@ -38,7 +38,7 @@ public class InstituteControllerTest {
 
 		limparObjetoEvento();
 		new EventService(sessionFactory).truncateTable();
-		new RegionalService(sessionFactory).limparTabela();
+		new RegionalService(sessionFactory).truncateTable();
 		new CategoryService(sessionFactory).truncateTable();
 		new InstituteService(sessionFactory).truncateTable();
 	}

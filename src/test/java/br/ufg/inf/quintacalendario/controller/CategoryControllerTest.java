@@ -37,7 +37,7 @@ public class CategoryControllerTest {
 		sessionFactory = Application.getInstance().getSessionFactory();
 
 		limparObjetoEvento();
-		new RegionalService(sessionFactory).limparTabela();
+		new RegionalService(sessionFactory).truncateTable();
 		new EventService(sessionFactory).truncateTable();
 		new InstituteService(sessionFactory).truncateTable();
 		new CategoryService(sessionFactory).truncateTable();

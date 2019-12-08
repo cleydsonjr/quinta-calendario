@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 import br.ufg.inf.quintacalendario.view.TelaInicial;
 import br.ufg.inf.quintacalendario.view.console.TelaInicialConsole;
 
+import java.util.Objects;
+
 public class Application {
 
     private static Application applicationInstance;
@@ -16,7 +18,7 @@ public class Application {
     }
 
     public static synchronized Application getInstance() {
-        if (applicationInstance == null) {
+        if (Objects.isNull(applicationInstance)) {
             applicationInstance = new Application();
         }
 
@@ -28,14 +30,13 @@ public class Application {
     }
 
     private void run() {
-        TelaInicial telaInicial = new TelaInicialConsole(System.out);
-        telaInicial.exibaCabecalho();
-        telaInicial.showOptions();
+        TelaInicial startScreen = new TelaInicialConsole(System.out);
+        startScreen.exibaCabecalho();
+        startScreen.showOptions();
     }
 
     public static void main(String[] args) {
-        Application application = Application.getInstance();
-        application.run();
+        Application.getInstance().run();
     }
 
 }

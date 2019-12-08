@@ -21,7 +21,7 @@ public class RegionalService {
         Transaction transaction = session.beginTransaction();
         try {
 
-            validarRegional(regional);
+            validateRegional(regional);
 
             new RegionalRepository(session).salvar(regional);
             transaction.commit();
@@ -36,21 +36,21 @@ public class RegionalService {
         }
     }
 
-    public void edit(long codigo, String descricao) {
+    public void edit(long id, String description) {
         Session session = sessionFactory.openSession();
-        RegionalRepository repository = new RegionalRepository(session);
-        Regional regional = repository.listarPorId(codigo);
+        RegionalRepository regionalRepository = new RegionalRepository(session);
+        Regional regional = regionalRepository.listarPorId(id);
 
         Transaction transaction = session.beginTransaction();
 
-        regional.setName(descricao);
-        repository.atualizar(regional);
+        regional.setName(description);
+        regionalRepository.atualizar(regional);
 
         transaction.commit();
         session.close();
     }
 
-    public void validarRegional(Regional regional) throws IllegalArgumentException {
+    private void validateRegional(Regional regional) throws IllegalArgumentException {
         if (regional.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome da regional nao pode ser vazio");
         }
@@ -65,9 +65,9 @@ public class RegionalService {
         return new RegionalRepository(session).listar();
     }
 
-    public List<Regional> listRecordsByDescription(String descricao) {
+    public List<Regional> listRecordsByDescription(String description) {
         Session session = sessionFactory.openSession();
-        return new RegionalRepository(session).listarPorDescricao(descricao);
+        return new RegionalRepository(session).listarPorDescricao(description);
     }
 
     public Regional listById(long id) {
@@ -75,7 +75,7 @@ public class RegionalService {
         return new RegionalRepository(session).listarPorId(id);
     }
 
-    public void limparTabela() {
+    public void truncateTable() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         new RegionalRepository(session).limparTabela();
@@ -83,10 +83,10 @@ public class RegionalService {
         session.close();
     }
 
-    public void remove(long codigo) {
+    public void remove(long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        new RegionalRepository(session).remover(codigo);
+        new RegionalRepository(session).remover(id);
         transaction.commit();
         session.close();
     }

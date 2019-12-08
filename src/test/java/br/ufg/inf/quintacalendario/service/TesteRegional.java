@@ -24,12 +24,12 @@ public class TesteRegional {
         new EventService(sessionFactory).truncateTable();
         new InstituteService(sessionFactory).truncateTable();
         new CategoryService(sessionFactory).truncateTable();
-        new RegionalService(sessionFactory).limparTabela();
+        new RegionalService(sessionFactory).truncateTable();
     }
 
     @After
     public void finalizar() {
-        new RegionalService(sessionFactory).limparTabela();
+        new RegionalService(sessionFactory).truncateTable();
     }
 
     @Test
