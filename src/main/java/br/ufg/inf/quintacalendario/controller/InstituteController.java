@@ -44,7 +44,7 @@ public class InstituteController extends AbstractController {
         institute.setName(name);
 
         InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
-        return instituteService.salvar(institute);
+        return instituteService.save(institute);
     }
 
     /**
