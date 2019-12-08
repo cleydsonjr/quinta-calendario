@@ -36,7 +36,7 @@ public class TesteInstitute {
     public void testeSalvarInstituto() {
         Institute institute = new Institute();
         institute.setName("Feriado");
-        boolean retorno = new InstituteService(sessionFactory).salvar(institute);
+        boolean retorno = new InstituteService(sessionFactory).save(institute);
         Assert.assertTrue(retorno);
     }
 
@@ -44,7 +44,7 @@ public class TesteInstitute {
     public void testeSalvarInstitutoComNomeVazio() {
         Institute institute = new Institute();
         institute.setName("");
-        boolean retorno = new InstituteService(sessionFactory).salvar(institute);
+        boolean retorno = new InstituteService(sessionFactory).save(institute);
         Assert.assertFalse(retorno);
     }
 

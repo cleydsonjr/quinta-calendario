@@ -242,7 +242,7 @@ public class TesteEvent {
 
     public Category pesquisarCategoriaPorDescricao() {
         CategoryService categoryService = new CategoryService(sessionFactory);
-        List<Category> categories = categoryService.searchByDescription("Feriado");
+        List<Category> categories = categoryService.listRecordsByDescription("Feriado");
         if (!categories.isEmpty()) {
             return categories.get(0);
         }
@@ -268,7 +268,7 @@ public class TesteEvent {
         institute.setName("INF - Instituto de Informatica");
 
         InstituteService instituteService = new InstituteService(sessionFactory);
-        instituteService.salvar(institute);
+        instituteService.save(institute);
     }
 
     public List<Institute> consultarInstitutos() {
