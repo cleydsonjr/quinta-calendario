@@ -7,7 +7,7 @@ import br.ufg.inf.quintacalendario.model.Institute;
 import br.ufg.inf.quintacalendario.model.Regional;
 import br.ufg.inf.quintacalendario.service.CategoryService;
 import br.ufg.inf.quintacalendario.service.EventService;
-import br.ufg.inf.quintacalendario.service.InstitutoService;
+import br.ufg.inf.quintacalendario.service.InstituteService;
 import br.ufg.inf.quintacalendario.service.RegionalService;
 import br.ufg.inf.quintacalendario.view.console.EventScreenConsole;
 
@@ -74,7 +74,7 @@ public class EventController extends AbstractController {
 			event.setCategory(new CategoryService(getAbstractSessionFactory()).listById(categoryId));
 
 			List<Institute> institutes = new ArrayList<>();
-			institutes.add(new InstitutoService(getAbstractSessionFactory()).listById(instituteId));
+			institutes.add(new InstituteService(getAbstractSessionFactory()).listById(instituteId));
 
 			event.setInstitutes(institutes);
 
@@ -183,8 +183,8 @@ public class EventController extends AbstractController {
      * @see InstituteController#listRecords()
      */
 	public List<Institute> listInstitutes() {
-		InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-		return institutoService.listRecords();
+		InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+		return instituteService.listRecords();
 	}
 
     /**

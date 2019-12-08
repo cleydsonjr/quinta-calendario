@@ -22,7 +22,7 @@ public class TesteRegional {
         limparObjetoEvento();
 
         new EventService(sessionFactory).truncateTable();
-        new InstitutoService(sessionFactory).limparTabela();
+        new InstituteService(sessionFactory).truncateTable();
         new CategoryService(sessionFactory).truncateTable();
         new RegionalService(sessionFactory).limparTabela();
     }

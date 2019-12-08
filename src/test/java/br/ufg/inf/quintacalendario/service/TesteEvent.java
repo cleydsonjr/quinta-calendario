@@ -24,7 +24,7 @@ public class TesteEvent {
 
         limparObjeto();
         new EventService(sessionFactory).truncateTable();
-        new InstitutoService(sessionFactory).limparTabela();
+        new InstituteService(sessionFactory).truncateTable();
         new RegionalService(sessionFactory).limparTabela();
         new CategoryService(sessionFactory).truncateTable();
     }
@@ -108,8 +108,8 @@ public class TesteEvent {
         eventService.save(criarEvento());
 
         Institute institute = null;
-        InstitutoService institutoService = new InstitutoService(sessionFactory);
-        List<Institute> institutes = institutoService.listRecords();
+        InstituteService instituteService = new InstituteService(sessionFactory);
+        List<Institute> institutes = instituteService.listRecords();
 
 
         if (!institutes.isEmpty()) {
@@ -267,13 +267,13 @@ public class TesteEvent {
         Institute institute = new Institute();
         institute.setName("INF - Instituto de Informatica");
 
-        InstitutoService institutoService = new InstitutoService(sessionFactory);
-        institutoService.salvar(institute);
+        InstituteService instituteService = new InstituteService(sessionFactory);
+        instituteService.salvar(institute);
     }
 
     public List<Institute> consultarInstitutos() {
-        InstitutoService institutoService = new InstitutoService(sessionFactory);
-        List<Institute> institutes = institutoService.listRecords();
+        InstituteService instituteService = new InstituteService(sessionFactory);
+        List<Institute> institutes = instituteService.listRecords();
 
         return institutes;
     }

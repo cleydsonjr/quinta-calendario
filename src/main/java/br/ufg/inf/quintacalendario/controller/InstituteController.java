@@ -2,7 +2,7 @@ package br.ufg.inf.quintacalendario.controller;
 
 import br.ufg.inf.quintacalendario.main.Application;
 import br.ufg.inf.quintacalendario.model.Institute;
-import br.ufg.inf.quintacalendario.service.InstitutoService;
+import br.ufg.inf.quintacalendario.service.InstituteService;
 import br.ufg.inf.quintacalendario.view.console.InstituteScreenConsole;
 
 import java.util.List;
@@ -43,8 +43,8 @@ public class InstituteController extends AbstractController {
         Institute institute = new Institute();
         institute.setName(name);
 
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        return institutoService.salvar(institute);
+        InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+        return instituteService.salvar(institute);
     }
 
     /**
@@ -54,8 +54,8 @@ public class InstituteController extends AbstractController {
      * @see List<Institute>
      */
     public List<Institute> listRecords() {
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        return institutoService.listRecords();
+        InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+        return instituteService.listRecords();
     }
 
     /**
@@ -66,8 +66,8 @@ public class InstituteController extends AbstractController {
      * @see List<Institute>
      */
     public List<Institute> listRecordsByDescription(String description) {
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        return institutoService.listRecordsByDescription(description);
+        InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+        return instituteService.listRecordsByDescription(description);
     }
 
     /**
@@ -78,8 +78,8 @@ public class InstituteController extends AbstractController {
      * @see Institute
      */
     public Institute listById(Integer id) {
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        return institutoService.listById(id);
+        InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+        return instituteService.listById(id);
     }
 
     /**
@@ -89,8 +89,8 @@ public class InstituteController extends AbstractController {
      * @param name institute name
      */
     public void edit(Integer id, String name) {
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        institutoService.edit(id, name);
+        InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+        instituteService.edit(id, name);
     }
 
     /**
@@ -99,14 +99,14 @@ public class InstituteController extends AbstractController {
      * @param id institute identifier
      */
     public void remove(Integer id) {
-        InstitutoService institutoService = new InstitutoService(getAbstractSessionFactory());
-        Institute institute = institutoService.listById(id);
+        InstituteService instituteService = new InstituteService(getAbstractSessionFactory());
+        Institute institute = instituteService.listById(id);
 
         if (Objects.isNull(institute)) {
             System.out.println("******* Codigo invalido *******");
             getInstituteScreen().remove();
         } else {
-            institutoService.remove(id);
+            instituteService.remove(id);
         }
     }
 

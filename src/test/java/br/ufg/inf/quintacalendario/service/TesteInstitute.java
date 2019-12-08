@@ -24,19 +24,19 @@ public class TesteInstitute {
         new EventService(sessionFactory).truncateTable();
         new RegionalService(sessionFactory).limparTabela();
         new CategoryService(sessionFactory).truncateTable();
-        new InstitutoService(sessionFactory).limparTabela();
+        new InstituteService(sessionFactory).truncateTable();
     }
 
     @After
     public void finalizar() {
-        new InstitutoService(sessionFactory).limparTabela();
+        new InstituteService(sessionFactory).truncateTable();
     }
 
     @Test
     public void testeSalvarInstituto() {
         Institute institute = new Institute();
         institute.setName("Feriado");
-        boolean retorno = new InstitutoService(sessionFactory).salvar(institute);
+        boolean retorno = new InstituteService(sessionFactory).salvar(institute);
         Assert.assertTrue(retorno);
     }
 
@@ -44,7 +44,7 @@ public class TesteInstitute {
     public void testeSalvarInstitutoComNomeVazio() {
         Institute institute = new Institute();
         institute.setName("");
-        boolean retorno = new InstitutoService(sessionFactory).salvar(institute);
+        boolean retorno = new InstituteService(sessionFactory).salvar(institute);
         Assert.assertFalse(retorno);
     }
 
